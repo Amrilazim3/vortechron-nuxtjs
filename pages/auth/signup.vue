@@ -34,12 +34,11 @@
                 <div>
                     <label for="password">Password</label>
                     <Input type="password" id="password" v-model="form.password" required/> 
-                    <p v-if="errors.password" class="text-red-500">{{ errors.password[0] }}</p>
                 </div>
                 <div>
                     <label for="password_confirmation">Password confirmation</label>
                     <Input type="password" id="password_confirmation" v-model="form.password_confirmation" required/> 
-                    <p v-if="errors.password_confirmation" class="text-red-500">{{ errors.password_confirmation[0] }}</p>
+                    <p v-if="errors.password" class="text-red-500">{{ errors.password[0] }}</p>
                 </div>
                 <p class="mt-2">Already sign up? <NuxtLink to="/auth/login" class="text-blue-400 hover:underline">Log in</NuxtLink> here</p>
                 <BlueButton type="submit" class="mt-6 w-full transition duration-300">
@@ -75,9 +74,9 @@ export default {
             try {
                 let errors = []
                 await this.$axios.$get('/sanctum/csrf-cookie')
-                await this.$axios.$post('/register', this.form)
+                await this.$axios.$post('/api/signup', this.form)
                     .then((resp) => {
-                        console.log(resp)
+                        this.$auth.loginWith('laravelSanctum', { data: this.form })
                     })
                     .catch((err) => {
                         if (err.response.status = 422) {
@@ -85,7 +84,6 @@ export default {
                         }
                     })
                     this.errors = errors
-                    await this.$auth.loginWith('laravelSanctum', { data: this.form })
             } catch (error) {}
         }
     }
