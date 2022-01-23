@@ -2,7 +2,7 @@
     <section class="grid p-10 sm:max-w-xl sm:mx-auto md:max-w-2xl lg:flex lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl">
         <div class="hidden md:block md:mt-10 lg:self-center lg:flex-1 xl:ml-8 2xl:ml-16">
             <h1 class="text-4xl text-black font-bold md:text-center lg:text-left">
-                CREATE YOUR OWN BLOG POST s
+                CREATE YOUR OWN BLOG POST
             </h1>
             <p class="text-base text-blue-700 font-medium md:text-center lg:text-left">Create your account now!</p>
         </div>
