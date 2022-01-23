@@ -2,7 +2,7 @@
     <header style="background:rgba(243, 243, 243, 1);">
         <div class="grid p-6 sm:justify-center sm:grid-cols-3 sm:max-w-xl sm:mx-auto md:max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl">
             <div class="sm:col-span-2 xl:inline-flex">
-                <div class="flex">
+                <div class="flex justify-between">
                     <VortechronLogo />
                     <DoubleArrowDown @changeState="isOpen = !isOpen"/>
                 </div>
