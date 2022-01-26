@@ -12,7 +12,7 @@
         <!-- show the lists -->
         <template>
             <div v-if="openCategory" class="absolute z-50 w-full flex flex-col py-2 px-1 overflow-auto bg-gray-100 rounded-xl max-h-28 sm:max-h-36">
-                <DropDownItem to="/auth/login">One</DropDownItem>
+                <DropDownItem to="/">One</DropDownItem>
                 <DropDownItem to="/">Two</DropDownItem>
                 <DropDownItem to="/">Three</DropDownItem>
             </div>
