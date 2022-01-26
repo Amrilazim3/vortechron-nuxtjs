@@ -28,7 +28,7 @@
                     </div>
                 </template>
                 <template v-else>
-                    <LoginSignupLink/>
+                    <SignInSignUpLink/>
                 </template>
             </div>
         </div>

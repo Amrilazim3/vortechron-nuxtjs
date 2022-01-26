@@ -27,7 +27,7 @@ export default {
         async OAuthservices(service) {
             await this.$axios.$get(`/api/oauth/${service}`)
                 .then((res) => {
-                    const newWindow = openWindow('', 'login')
+                    const newWindow = openWindow('', 'sign in')
                     newWindow.location.href = res.url
                 })
         },
