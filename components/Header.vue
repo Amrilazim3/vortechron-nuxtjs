@@ -13,7 +13,7 @@
                         <ProfileDropDown />
                     </template>
                     <template v-else>
-                        <LoginSignupLink class="mt-2"/>
+                        <SignInSignUpLink class="mt-2"/>
                     </template>
                 </div>
                 <!-- entering sm(640px) state -->
