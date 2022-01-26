@@ -8,12 +8,12 @@
         </div>
         <div style="background-color: rgba(243, 243, 243, 1);" class="rounded-lg shadow-xl mt-6 lg:flex-1 xl:mr-8 2xl:ml-40 2xl:mr-14">
             <form @submit.prevent="login" class="p-8">
-                <h3 class="text-2xl font-bold">Log in to your account</h3>
-                <p class="text-base font-normal mt-4">Log in with :</p>
+                <h3 class="text-2xl font-bold">Sign in to your account</h3>
+                <p class="text-base font-normal mt-4">Sign in with :</p>
                 <OAuthServices class="flex mt-2 space-x-4"/>
                 <div class="flex my-6">
                     <div class="bg-gray-300 h-0.5 flex-1 self-center"></div>
-                    <p class="text-center mx-4 text-sm">Or manually log in</p>
+                    <p class="text-center mx-4 text-sm">Or manually sign in</p>
                     <div class="bg-gray-300 h-0.5 flex-1 self-center"></div>
                 </div>
                 <div>
@@ -25,9 +25,9 @@
                     <Input type="password" id="password" v-model="form.password" required/> 
                     <p v-if="errors" class="text-red-500">{{ errors }}</p>
                 </div>
-                <p class="mt-2">Don't have account? <NuxtLink to="/auth/signup" class="text-blue-400 hover:underline">Sign up</NuxtLink> here</p>
+                <p class="mt-2">Don't have account? <NuxtLink to="/auth/sign-up" class="text-blue-400 hover:underline">Sign up</NuxtLink> here</p>
                 <BlueButton type="submit" class="mt-6 w-full transition duration-300">
-                    Log In
+                    Sign In
                 </BlueButton>
             </form>
         </div>
@@ -37,7 +37,7 @@
 <script>
 export default {
     head: {
-        title: '| login',
+        title: '| Sign In',
         meta: [
             { hid: 'description', name: 'description', content: 'Login page' }
         ],

@@ -40,7 +40,7 @@
                     <Input type="password" id="password_confirmation" v-model="form.password_confirmation" required/> 
                     <p v-if="errors.password" class="text-red-500">{{ errors.password[0] }}</p>
                 </div>
-                <p class="mt-2">Already sign up? <NuxtLink to="/auth/login" class="text-blue-400 hover:underline">Log in</NuxtLink> here</p>
+                <p class="mt-2">Already sign up? <NuxtLink to="/auth/sign-in" class="text-blue-400 hover:underline">Sign in</NuxtLink> here</p>
                 <BlueButton type="submit" class="mt-6 w-full transition duration-300">
                     Sign Up
                 </BlueButton>
@@ -52,9 +52,9 @@
 <script>
 export default {
     head: {
-        title: '| signup',
+        title: '| Sign Up',
         meta: [
-            { hid: 'description', name: 'description', content: 'Login page' }
+            { hid: 'description', name: 'description', content: 'Sign in page' }
         ],
     },
 
