@@ -7,7 +7,7 @@
             <p class="text-base text-blue-700 font-medium md:text-center lg:text-left">Continue exploring endlessly</p>
         </div>
         <div style="background-color: rgba(243, 243, 243, 1);" class="rounded-lg shadow-xl mt-6 lg:flex-1 xl:mr-8 2xl:ml-40 2xl:mr-14">
-            <form @submit.prevent="login" class="p-8">
+            <form @submit.prevent="signIn" class="p-8">
                 <h3 class="text-2xl font-bold">Sign in to your account</h3>
                 <p class="text-base font-normal mt-4">Sign in with :</p>
                 <OAuthServices class="flex mt-2 space-x-4"/>
@@ -53,7 +53,7 @@ export default {
     }),
 
     methods: {
-        async login() {
+        async signIn() {
             try {
                 await this.$auth.loginWith('laravelSanctum', { data: this.form })
             } catch (err) {
