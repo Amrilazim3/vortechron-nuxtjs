@@ -56,10 +56,10 @@ export default {
         url: API_URL,
         endpoints: {
           login: {
-            url: '/api/login'
+            url: '/api/sign-in'
           },
           logout: {
-            url: '/api/logout'
+            url: '/api/sign-out'
           },
           user: {
             url: '/api/user'
@@ -71,7 +71,7 @@ export default {
       }
     },
     redirect: {
-      login: '/auth/login',
+      login: '/auth/sign-in',
       logout: '/',
       home: '/dashboard'
     }
