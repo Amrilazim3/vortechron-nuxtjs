@@ -7,7 +7,7 @@
             <p class="text-base text-blue-700 font-medium md:text-center lg:text-left">Create your account now!</p>
         </div>
         <div style="background-color: rgba(243, 243, 243, 1);" class="rounded-lg shadow-xl mt-6 lg:flex-1 xl:mr-8 2xl:ml-40 2xl:mr-14">
-            <form @submit.prevent="register" class="p-8">
+            <form @submit.prevent="signUp" class="p-8">
                 <h3 class="text-2xl font-bold mb-4">Sign up to create account</h3>
                 <p class="text-base font-normal mt-4">Sign up in with :</p>
                 <OAuthServices class="flex mt-2 space-x-4"/>
@@ -70,11 +70,11 @@ export default {
     }),
 
     methods: {
-        async register() {
+        async signUp() {
             try {
                 let errors = []
                 await this.$axios.$get('/sanctum/csrf-cookie')
-                await this.$axios.$post('/api/signup', this.form)
+                await this.$axios.$post('/api/sign-up', this.form)
                     .then((resp) => {
                         this.$auth.loginWith('laravelSanctum', { data: this.form })
                     })
