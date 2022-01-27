@@ -30,7 +30,7 @@
                 <DropDownItem to="/user/profile" :class="{'bg-gray-300' : this.$nuxt.$route.path == '/user/profile'}">Profile</DropDownItem>
                 <DropDownItem to="/user/likes" :class="{'bg-gray-300' : this.$nuxt.$route.path == '/user/likes'}">Likes</DropDownItem>
                 <DropDownItem to="/user/bookmarks" :class="{'bg-gray-300' : this.$nuxt.$route.path == '/user/bookmarks'}">Bookmarks</DropDownItem>
-                <button class="px-1 max-w-min mt-4 hover:text-red-500" @click="logout">Logout</button>
+                <button class="flex px-1 mt-4 hover:text-red-500" @click="signOut">sign out</button>
             </div>
         </template>
     </DropDown>
@@ -60,7 +60,7 @@ export default {
             document.removeEventListener('click', this.hideProfile);
         },
 
-        logout() {
+        signOut() {
             this.$auth.logout()
         }
     },
