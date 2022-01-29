@@ -9,7 +9,7 @@
         <div style="background-color: rgba(243, 243, 243, 1);" class="rounded-lg shadow-xl mt-6 lg:flex-1 xl:mr-8 2xl:ml-40 2xl:mr-14">
             <form @submit.prevent="signIn" class="p-8">
                 <h3 class="text-2xl font-bold">Sign in to your account</h3>
-                <p class="text-base font-normal mt-4">Sign in with  s:</p>
+                <p class="text-base font-normal mt-4">Sign in with :</p>
                 <OAuthServices class="flex mt-2 space-x-4"/>
                 <div class="flex my-6">
                     <div class="bg-gray-300 h-0.5 flex-1 self-center"></div>
