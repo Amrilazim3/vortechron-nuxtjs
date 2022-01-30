@@ -21,7 +21,7 @@
                     <Input type="email" id="email" v-model="form.email" required/> 
                 </div>
                 <div>
-                    <label for="password">Password</label>
+                    <label for="password">Password </label>
                     <Input type="password" id="password" v-model="form.password" required/> 
                     <p v-if="errors" class="text-red-500">{{ errors }}</p>
                 </div>
