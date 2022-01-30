@@ -40,7 +40,7 @@ export default {
             if (e.data && e.data.token) {
                 await this.$axios.$get('/sanctum/csrf-cookie')
 
-                this.$axios.get('/api/oauth/login/' + e.data.token)
+                this.$axios.get('/api/oauth/sign-in/' + e.data.token)
                     .then(async (res) => {
                         let form = {
                             email: res.data.user.email,
