@@ -4,7 +4,7 @@
             <div class="mt-2 sm:-mt-0">
                 <template v-if="!this.$auth.user.image_url">
                     <div class="flex">
-                        <button class="bg-gray-300 border rounded-full p-1.5 mr-2" @click="toggleProfile">
+                        <button class="p-1.5 mr-2" @click="toggleProfile">
                             <img src="~/assets/default-profile-icon.svg" alt="" class="h-5">
                         </button>
                         <button class="text-sm" @click="toggleProfile">
