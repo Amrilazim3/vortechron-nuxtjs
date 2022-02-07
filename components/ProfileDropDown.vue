@@ -14,8 +14,8 @@
                 </template>
                 <template v-else>
                     <div class="flex">
-                        <button class="bg-gray-300 border rounded-full p-1.5 mr-2" @click="toggleProfile">
-                            <img src="https://picsum.photos/20" alt="" class="h-5">
+                        <button @click="toggleProfile">
+                            <img :src="this.$auth.user.image_full_url" alt="" class="h-8 w-8 rounded-full mr-2">
                         </button>
                         <button class="text-sm" @click="toggleProfile">
                             {{ this.$auth.user.username }}
@@ -27,9 +27,15 @@
 
         <template>
             <div v-if="openProfile" class="absolute z-50 flex flex-col w-40 py-2 px-1 mt-2 overflow-auto bg-white rounded-xl max-h-28 sm:max-h-36">
-                <DropDownItem to="/user/profile" :class="{'bg-gray-300' : this.$nuxt.$route.path == '/user/profile'}">Profile</DropDownItem>
-                <DropDownItem to="/user/likes" :class="{'bg-gray-300' : this.$nuxt.$route.path == '/user/likes'}">Likes</DropDownItem>
-                <DropDownItem to="/user/bookmarks" :class="{'bg-gray-300' : this.$nuxt.$route.path == '/user/bookmarks'}">Bookmarks</DropDownItem>
+                <DropDownItem to="/user/account/profile" class="-mt-0" :class="{'bg-gray-300' : this.$nuxt.$route.path == '/user/account/profile'}">Profile</DropDownItem>
+                <DropDownItem to="/user/account/edit-profile" class="ml-4 text-sm font-normal" :class="{'bg-gray-300' : this.$nuxt.$route.path == '/user/account/edit-profile'}">
+                    Edit Profile
+                </DropDownItem>
+                <DropDownItem to="/user/account/change-password" class="ml-4 text-sm font-normal" :class="{'bg-gray-300' : this.$nuxt.$route.path == '/user/account/change-password'}">
+                    Change Password
+                </DropDownItem>
+                <DropDownItem to="/user/likes" :class="{'bg-gray-300' : this.$nuxt.$route.path == '/user/likes'}">Liked</DropDownItem>
+                <DropDownItem to="/user/bookmarks" :class="{'bg-gray-300' : this.$nuxt.$route.path == '/user/bookmarks'}">Bookmarked</DropDownItem>
                 <button class="flex px-1 mt-4 hover:text-red-500" @click="signOut">sign out</button>
             </div>
         </template>
