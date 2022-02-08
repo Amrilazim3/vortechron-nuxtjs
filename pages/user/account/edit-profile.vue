@@ -22,6 +22,7 @@
                             </div>
                         </template>
                         <input type="file" @change="handleFileUpload($event)" class="mt-4"/>
+                        <p v-if="errors.file" class="text-red-500">{{ errors.file[0] }}</p>
                     </div>
                 </div>
                 <div class="mt-6 flex w-full">
@@ -70,6 +71,9 @@
 
 <script>
 export default {
+    
+    middleware: 'auth',
+
     mounted() {
         this.form = JSON.parse(JSON.stringify(this.$auth.user))
     },
@@ -111,16 +115,17 @@ export default {
         },
 
         async removeFile() {
-            try {
-                await this.$axios.$get('/api/user/profile/remove-file')
-                .then((resp) => {
-                    this.form = resp.user
-                    this.$auth.setUser(JSON.parse(JSON.stringify(resp.user)))
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-            } catch (e) {}
+            let answer = confirm("Are you sure to delete your profile picture?");
+
+            if (answer) {
+                try {
+                    await this.$axios.$get('/api/user/profile/remove-file')
+                    .then((resp) => {
+                        this.form = resp.user
+                        this.$auth.setUser(JSON.parse(JSON.stringify(resp.user)))
+                    })
+                } catch (e) {}
+            } 
         },
         
         removeModal() {
