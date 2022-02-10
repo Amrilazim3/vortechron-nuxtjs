@@ -80,7 +80,7 @@ export default {
                 let errors = []
                 await this.$axios.$get('/sanctum/csrf-cookie')
                 await this.$axios.$post('/api/sign-up', this.form)
-                    .then((resp) => {
+                    .then(() => {
                         this.$auth.loginWith('laravelSanctum', { data: this.form })
                     })
                     .catch((err) => {
