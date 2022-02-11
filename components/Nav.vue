@@ -3,6 +3,8 @@
         <Header />
 
         <SubHeader />
+        
+        <EmailVerificationNotice />
     </section>
 </template>
 
