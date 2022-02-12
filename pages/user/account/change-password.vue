@@ -11,6 +11,13 @@
 
 <script>
 export default {
-    middleware: 'auth'
+    middleware: 'auth',
+
+    head: {
+        title: '| Change Password',
+        meta: [
+            { hid: 'description', name: 'description', content: 'Bookmarked' }
+        ],
+    },    
 }
 </script>
