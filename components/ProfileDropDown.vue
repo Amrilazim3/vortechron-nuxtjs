@@ -34,8 +34,8 @@
                 <DropDownItem to="/user/account/change-password" class="ml-4 text-sm font-normal" :class="{'bg-gray-300' : this.$nuxt.$route.path == '/user/account/change-password'}">
                     Change Password
                 </DropDownItem>
-                <DropDownItem to="/user/likes" :class="{'bg-gray-300' : this.$nuxt.$route.path == '/user/likes'}">Liked</DropDownItem>
-                <DropDownItem to="/user/bookmarks" :class="{'bg-gray-300' : this.$nuxt.$route.path == '/user/bookmarks'}">Bookmarked</DropDownItem>
+                <DropDownItem to="/user/liked" :class="{'bg-gray-300' : this.$nuxt.$route.path == '/user/liked'}">Liked</DropDownItem>
+                <DropDownItem to="/user/bookmarked" :class="{'bg-gray-300' : this.$nuxt.$route.path == '/user/bookmarked'}">Bookmarked</DropDownItem>
                 <button class="flex px-1 mt-4 hover:text-red-500" @click="signOut">sign out</button>
             </div>
         </template>
