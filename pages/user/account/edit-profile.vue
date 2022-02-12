@@ -18,10 +18,13 @@
                         <template v-else>
                             <div class="flex">
                                 <img class="h-14 w-14 rounded-full" :src="this.form.image_full_url" id="image-url" alt="">
-                                <button class="ml-4 text-sm font-light hover:text-red-500" @click.prevent="removeFile">Remove</button>
+                                <button class="ml-4 text-sm font-light underline hover:text-red-500" @click.prevent="removeFile">Remove</button>
                             </div>
                         </template>
-                        <input type="file" @change="handleFileUpload($event)" class="mt-4"/>
+                        <div class="flex">
+                            <input type="file" id="file" @change="handleFileUpload($event)" class="mt-4"/>
+                            <button class="self-end ml-2 py-0.5 px-2 border border-black bg-gray-200 hover:bg-gray-300" v-if="this.file" @click.prevent="clearFileForm">clear</button>
+                        </div>
                         <p v-if="errors.file" class="text-red-500">{{ errors.file[0] }}</p>
                     </div>
                 </div>
@@ -74,6 +77,13 @@ export default {
     
     middleware: 'auth',
 
+    head: {
+        title: '| Edit Profile',
+        meta: [
+            { hid: 'description', name: 'description', content: 'Bookmarked' }
+        ],
+    },
+
     mounted() {
         this.form = JSON.parse(JSON.stringify(this.$auth.user))
     },
@@ -100,6 +110,7 @@ export default {
                     document.addEventListener('click', this.removeModal)
                     this.form = resp.user
                     this.$auth.setUser(JSON.parse(JSON.stringify(resp.user)))
+                    this.clearFileForm()
                     this.errors = [];
                 })
                 .catch((err) => {
@@ -126,6 +137,11 @@ export default {
                     })
                 } catch (e) {}
             } 
+        },
+
+        clearFileForm() {
+            document.getElementById('file').value = '';
+            this.file = '';
         },
         
         removeModal() {
