@@ -152,6 +152,11 @@
 
 <script>
 export default {
-    
+    head: {
+        title: '| Dashboard',
+        meta: [
+            { hid: 'description', name: 'description', content: 'Dashboard' }
+        ],
+    },
 }
 </script>
