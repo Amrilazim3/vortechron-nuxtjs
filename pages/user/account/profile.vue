@@ -36,6 +36,13 @@
 
 <script>
 export default {
-    middleware: 'auth'
+    middleware: 'auth',
+
+    head: {
+        title: '| Profile',
+        meta: [
+            { hid: 'description', name: 'description', content: 'Bookmarked' }
+        ],
+    },
 }
 </script>
