@@ -17,7 +17,7 @@
                         <p class="text-center mx-4 text-sm">Or manually sign up</p>
                         <div class="bg-gray-300 h-0.5 flex-1 self-center"></div>
                     </div>
-                    <ValidationProvider vid="name" name="Name" rules="required|max:50" v-slot="{ errors }">
+                    <ValidationProvider vid="name" name="Name" rules="required|min:4|max:30" v-slot="{ errors }">
                         <div>
                             <label for="name">Name</label>
                             <InputField type="text" id="name" v-model="form.name"/> 
