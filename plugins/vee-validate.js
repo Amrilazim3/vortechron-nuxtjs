@@ -8,27 +8,21 @@ Vue.component('ValidationObserver', ValidationObserver);
 const dictionary = {
     en: {
         messages: {
-            required: () => '* Required',
+            required: (field) => `This ${field} is required.`,
+            min: (field, { length }) => `This ${field} cannot less than ${length} characters.`,
+            max: (field, { length }) => `This ${field} cannot more than ${length} characters.`,
+            email: (field) => `This ${field} must be a valid email address.`
         },
     },
 };
 
-extend("required", {
-    ...required,
-    message: 'This field is required.'
-});
+extend("required", required);
 
-extend("email", {
-    ...email,
-    message: 'The field must be a valid email address.'
-});
+extend("email", email);
 
 extend("min", min);
 
-extend("max", {
-    ...max,
-    message: 'adalah max error'
-});
+extend("max", max)
 
 localize(dictionary);
 setInteractionMode('eager');
