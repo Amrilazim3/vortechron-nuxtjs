@@ -24,7 +24,7 @@
                             <p class="text-red-500">{{ errors[0] }}</p>
                         </div>
                     </ValidationProvider>
-                    <ValidationProvider vid="password" name="Password" rules="required|min:9" v-slot="{ errors }">
+                    <ValidationProvider vid="password" name="Password" rules="required" v-slot="{ errors }">
                         <div>
                             <label for="password">Password</label>
                             <InputField type="password" id="password" v-model="form.password"/>
