@@ -7,44 +7,57 @@
             <p class="text-base text-blue-700 font-medium md:text-center lg:text-left">Create your account now!</p>
         </div>
         <div style="background-color: rgba(243, 243, 243, 1);" class="rounded-lg shadow-xl mt-6 lg:flex-1 xl:mr-8 2xl:ml-40 2xl:mr-14">
-            <form @submit.prevent="signUp" class="p-8">
-                <h3 class="text-2xl font-bold mb-4">Sign up to create account</h3>
-                <p class="text-base font-normal mt-4">Sign up in with :</p>
-                <OAuthServices class="flex mt-2 space-x-4"/>
-                <div class="flex my-6">
-                    <div class="bg-gray-300 h-0.5 flex-1 self-center"></div>
-                    <p class="text-center mx-4 text-sm">Or manually sign up</p>
-                    <div class="bg-gray-300 h-0.5 flex-1 self-center"></div>
-                </div>
-                <div>
-                    <label for="name">Name</label>
-                    <Input type="text" id="name" v-model="form.name" required/> 
-                    <p v-if="errors.name" class="text-red-500">{{ errors.name[0] }}</p>
-                </div>
-                <div>
-                    <label for="username">Username</label>
-                    <Input type="text" id="username" v-model="form.username" required/> 
-                    <p v-if="errors.username" class="text-red-500">{{ errors.username[0] }}</p>
-                </div>
-                <div>
-                    <label for="email">Email</label>
-                    <Input type="email" id="email" v-model="form.email" required/> 
-                    <p v-if="errors.email" class="text-red-500">{{ errors.email[0] }}</p>
-                </div>
-                <div>
-                    <label for="password">Password</label>
-                    <Input type="password" id="password" v-model="form.password" required/> 
-                </div>
-                <div>
-                    <label for="password_confirmation">Password confirmation</label>
-                    <Input type="password" id="password_confirmation" v-model="form.password_confirmation" required/> 
-                    <p v-if="errors.password" class="text-red-500">{{ errors.password[0] }}</p>
-                </div>
-                <p class="mt-2">Already sign up? <NuxtLink to="/auth/sign-in" class="text-blue-400 hover:underline">Sign in</NuxtLink> here</p>
-                <BlueButton type="submit" class="mt-6 w-full transition duration-300">
-                    Sign Up
-                </BlueButton>
-            </form>
+            <ValidationObserver ref="form" v-slot="{ handleSubmit }">
+                <form @submit.prevent="handleSubmit(signUp)" class="p-8">
+                    <h3 class="text-2xl font-bold mb-4">Sign up to create account</h3>
+                    <p class="text-base font-normal mt-4">Sign up in with :</p>
+                    <OAuthServices class="flex mt-2 space-x-4"/>
+                    <div class="flex my-6">
+                        <div class="bg-gray-300 h-0.5 flex-1 self-center"></div>
+                        <p class="text-center mx-4 text-sm">Or manually sign up</p>
+                        <div class="bg-gray-300 h-0.5 flex-1 self-center"></div>
+                    </div>
+                    <ValidationProvider vid="name" name="Name" rules="required|max:50" v-slot="{ errors }">
+                        <div>
+                            <label for="name">Name</label>
+                            <InputField type="text" id="name" v-model="form.name"/> 
+                            <p class="text-red-500">{{ errors[0] }}</p>
+                        </div>
+                    </ValidationProvider>
+                    <ValidationProvider vid="username" name="Username" rules="required|min:4|max:15" v-slot="{ errors }">
+                        <div>
+                            <label for="username">Username</label>
+                            <InputField type="text" id="username" v-model="form.username"/> 
+                            <p class="text-red-500">{{ errors[0] }}</p>
+                        </div>
+                    </ValidationProvider>
+                    <ValidationProvider vid="email" name="Email" rules="required|email" v-slot="{ errors }">
+                        <div>
+                            <label for="email">Email</label>
+                            <InputField type="email" id="email" v-model="form.email"/>
+                            <p class="text-red-500">{{ errors[0] }}</p>
+                        </div>
+                    </ValidationProvider>
+                    <ValidationProvider vid="password" name="Password" rules="required|min:9" v-slot="{ errors }">
+                        <div>
+                            <label for="password">Password</label>
+                            <InputField type="password" id="password" v-model="form.password"/> 
+                            <p class="text-red-500">{{ errors[0] }}</p>
+                        </div>
+                    </ValidationProvider>
+                    <ValidationProvider vid="password_confirmation" name="Password Confirmation" rules="required|min:9" v-slot="{ errors }">
+                        <div>
+                            <label for="password_confirmation">Password confirmation</label>
+                            <InputField type="password" id="password_confirmation" v-model="form.password_confirmation"/> 
+                            <p class="text-red-500">{{ errors[0] }}</p>
+                        </div>
+                    </ValidationProvider>
+                    <p class="mt-2">Already sign up? <NuxtLink to="/auth/sign-in" class="text-blue-400 hover:underline">Sign in</NuxtLink> here</p>
+                    <BlueButton type="submit" id="submit" class="mt-6 w-full transition duration-300">
+                        Sign Up
+                    </BlueButton>
+                </form>
+            </ValidationObserver>
         </div>
     </section>
 </template>
@@ -76,6 +89,9 @@ export default {
 
     methods: {
         async signUp() {
+            let submitButton = document.getElementById('submit');
+            submitButton.disabled = true;
+            submitButton.classList.add("bg-blue-800");
             try {
                 let errors = []
                 await this.$axios.$get('/sanctum/csrf-cookie')
@@ -84,11 +100,14 @@ export default {
                         this.$auth.loginWith('laravelSanctum', { data: this.form })
                     })
                     .catch((err) => {
+                        submitButton.disabled = false;
+                        submitButton.classList.remove("bg-blue-800");
                         if (err.response.status = 422) {
-                            errors = err.response.data.errors
+                            errors = err.response.data.errors;
+                            console.log(errors);
+                            this.$refs.form.setErrors(errors);
                         }
                     })
-                    this.errors = errors
             } catch (error) {}
         }
     }
