@@ -38,14 +38,14 @@
                             <p class="text-red-500">{{ errors[0] }}</p>
                         </div>
                     </ValidationProvider>
-                    <ValidationProvider vid="password" name="Password" rules="required|min:9" v-slot="{ errors }">
+                    <ValidationProvider name="Password" rules="required|min:9" v-slot="{ errors }">
                         <div>
                             <label for="password">Password</label>
                             <InputField type="password" id="password" v-model="form.password"/> 
                             <p class="text-red-500">{{ errors[0] }}</p>
                         </div>
                     </ValidationProvider>
-                    <ValidationProvider vid="password_confirmation" name="Password Confirmation" rules="required|min:9" v-slot="{ errors }">
+                    <ValidationProvider vid="password" name="Password Confirmation" rules="required|min:9" v-slot="{ errors }">
                         <div>
                             <label for="password_confirmation">Password confirmation</label>
                             <InputField type="password" id="password_confirmation" v-model="form.password_confirmation"/> 
