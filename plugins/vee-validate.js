@@ -8,10 +8,10 @@ Vue.component('ValidationObserver', ValidationObserver);
 const dictionary = {
     en: {
         messages: {
-            required: (field) => `This ${field} is required.`,
-            min: (field, { length }) => `This ${field} cannot less than ${length} characters.`,
-            max: (field, { length }) => `This ${field} cannot more than ${length} characters.`,
-            email: (field) => `This ${field} must be a valid email address.`
+            required: (field) => `The ${field} field is required.`,
+            min: (field, { length }) => `The ${field} ust be at least ${length} characters.`,
+            max: (field, { length }) => `The ${field} must not be greater than ${length} characters.`,
+            email: (field) => `The ${field} must be a valid email address.`
         },
     },
 };
