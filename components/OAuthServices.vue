@@ -36,7 +36,6 @@ export default {
          * @param {MessageEvent} e
          */
         async onMessage (e) {
-
             if (e.data && e.data.token) {
                 await this.$axios.$get('/sanctum/csrf-cookie')
 
