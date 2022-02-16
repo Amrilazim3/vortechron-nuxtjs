@@ -44,7 +44,7 @@ export default {
                     .then(async (res) => {
                         let form = {
                             email: res.data.user.email,
-                            password: 'XXXXXXXXXX'
+                            password: null
                         }
 
                         await this.$auth.loginWith('laravelSanctum', {data: form})
