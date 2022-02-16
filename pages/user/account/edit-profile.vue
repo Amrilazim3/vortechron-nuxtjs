@@ -1,5 +1,6 @@
 <template>
-    <section class="grid md:flex p-6 mt-10 sm:max-w-xl sm:justify-center sm:mx-auto md:max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl">
+    <section class="grid p-6 mt-10 sm:max-w-xl sm:mx-auto md:flex md:justify-around md:max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl">
+        <ProfileSideBarNav />
         <div class="bg-white p-4 rounded-md shadow-2xl sm:p-6 sm:w-full lg:w-2/3">
             <div>
                 <h3 class="text-2xl font-semibold">Edit Profile</h3>
@@ -10,19 +11,29 @@
                     <h2 class="w-1/3 self-center">Profile Image</h2>
                     <div class="w-2/3">
                         <template v-if="!this.form.image_url">
-                            <div class="bg-gray-300 max-w-max p-2.5 rounded-full">
-                                <img class="h-8" src="~/assets/default-profile-icon.svg" alt="">
-                            </div>
+                            <template v-if="!this.file">
+                                <div class="bg-gray-300 max-w-max p-2.5 rounded-full">
+                                    <img class="h-8" src="~/assets/default-profile-icon.svg" alt="">
+                                </div>
+                            </template>
+                            <template v-else>
+                                <div>
+                                    <img id="output-selected-file" :src="this.selectedImage" class="h-14 w-14 rounded-full" />
+                                </div>
+                            </template>
                         </template>
                         <template v-else>
                             <div class="flex">
-                                <img class="h-14 w-14 rounded-full" :src="this.form.image_full_url" id="image-url" alt="">
-                                <button class="ml-4 text-sm font-light underline hover:text-red-500" @click.prevent="removeFile">Remove</button>
+                                <img class="h-14 w-14 rounded-full" :src="this.form.image_full_url" id="image-url">
+                                <button class="ml-4 hover:underline hover:text-red-500" @click.prevent="removeFile">Remove</button>
                             </div>
                         </template>
-                        <div class="flex">
-                            <input type="file" id="file" @change="handleFileUpload($event)" class="mt-4"/>
-                            <button class="self-end ml-2 py-0.5 px-2 border border-black bg-gray-200 hover:bg-gray-300" v-if="this.file" @click.prevent="clearFileForm">clear</button>
+                        <div>
+                            <label for="file" class="bg-blue-400 cursor-pointer hover:bg-blue-500 inline-block mt-4 px-2 py-1 rounded-md">
+                                <input type="file" id="file" accept="image/*" @change="handleFileUpload($event)" class="hidden"/>
+                                Select Photo
+                            </label>
+                            <button class="text-red-400" v-if="this.file" @click.prevent="clearFileForm">clear</button>
                         </div>
                     </div>
                 </div>
@@ -67,7 +78,7 @@
         </div>
         <div class="modal hidden" id="modal">
             <div class="modal-content">
-                Update successful
+                Edit successful
             </div>
         </div>
     </section>
@@ -87,13 +98,13 @@ export default {
 
     mounted() {
         this.form = JSON.parse(JSON.stringify(this.$auth.user));
-        console.log(this.form);
     },
 
     data() {
         return {
             form: {},
             file: '',
+            selectedImage: ''
         }
     },
 
@@ -127,6 +138,7 @@ export default {
 
         handleFileUpload(event) {
             this.file = event.target.files[0];
+            this.selectedImage = URL.createObjectURL(this.file);
         },
 
         async removeFile() {
