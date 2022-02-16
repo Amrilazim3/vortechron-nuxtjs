@@ -62,13 +62,14 @@ export default {
         async signIn() {
             let submitButton = document.getElementById('submit');
             submitButton.disabled = true;
-            submitButton.classList.add("bg-blue-800");
+            submitButton.classList.add('bg-blue-800');
+            submitButton.classList.add('cursor-not-allowed');
             try {
                 await this.$auth.loginWith('laravelSanctum', { data: this.form })
             } catch (err) {
                 submitButton.disabled = false;
                 submitButton.classList.remove("bg-blue-800");
-                console.log(err);
+                submitButton.classList.remove('cursor-not-allowed');
                 if (err.response.status = 422) {
                     this.$refs.form.setErrors({
                         password: ['Could not sign yout in with those credentials.']
