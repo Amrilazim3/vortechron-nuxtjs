@@ -9,7 +9,7 @@ const dictionary = {
     en: {
         messages: {
             required: (field) => `The ${field} field is required.`,
-            min: (field, { length }) => `The ${field} ust be at least ${length} characters.`,
+            min: (field, { length }) => `The ${field} must be at least ${length} characters.`,
             max: (field, { length }) => `The ${field} must not be greater than ${length} characters.`,
             email: (field) => `The ${field} must be a valid email address.`
         },
