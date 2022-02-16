@@ -17,7 +17,7 @@
                         <p class="text-center mx-4 text-sm">Or manually sign up</p>
                         <div class="bg-gray-300 h-0.5 flex-1 self-center"></div>
                     </div>
-                    <ValidationProvider tag="div" vid="name" name="Name" rules="required|min:4|max:30" v-slot="{ errors }">
+                    <ValidationProvider tag="div" vid="name" name="Name" rules="required|min:4|max:50" v-slot="{ errors }">
                         <label for="name">Name</label>
                         <InputField type="text" id="name" v-model="form.name"/> 
                         <p class="text-red-500">{{ errors[0] }}</p>
@@ -81,7 +81,8 @@ export default {
         async signUp() {
             let submitButton = document.getElementById('submit');
             submitButton.disabled = true;
-            submitButton.classList.add("bg-blue-800");
+            submitButton.classList.add('bg-blue-800');
+            submitButton.classList.add('cursor-not-allowed');
             try {
                 let errors = []
                 await this.$axios.$get('/sanctum/csrf-cookie')
@@ -91,7 +92,8 @@ export default {
                     })
                     .catch((err) => {
                         submitButton.disabled = false;
-                        submitButton.classList.remove("bg-blue-800");
+                        submitButton.classList.remove('bg-blue-800');
+                        submitButton.classList.remove('cursor-not-allowed');
                         if (err.response.status = 422) {
                             errors = err.response.data.errors;
                             console.log(errors);
