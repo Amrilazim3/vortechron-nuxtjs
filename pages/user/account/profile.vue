@@ -25,12 +25,15 @@
                 <span>0 post</span>
             </div>
         </div>
-        <template v-if="this.$auth.user.bio == null">
-            <p class="mt-6 font-thin">No bio yet</p>
-        </template>
-        <template v-else>
-            <p class="mt-6">{{ this.$auth.user.bio }}</p>
-        </template>
+        <div>
+            <p class="mt-6 font-bold">{{ this.$auth.user.name }}</p>
+            <template v-if="this.$auth.user.bio == null">
+                <p class="font-normal">No bio yet</p>
+            </template>
+            <template v-else>
+                <p class="font-normal">{{ this.$auth.user.bio }}</p>
+            </template>
+        </div>
     </section>
 </template>
 
