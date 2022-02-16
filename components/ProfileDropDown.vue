@@ -30,7 +30,7 @@
                 <DropDownItem to="/user/account/profile" class="-mt-0" :class="{'bg-gray-300' : this.$nuxt.$route.path == '/user/account/profile'}">Profile</DropDownItem>
                 <DropDownItem to="/user/liked" :class="{'bg-gray-300' : this.$nuxt.$route.path == '/user/liked'}">Liked</DropDownItem>
                 <DropDownItem to="/user/bookmarked" :class="{'bg-gray-300' : this.$nuxt.$route.path == '/user/bookmarked'}">Bookmarked</DropDownItem>
-                <DropDownItem to="/user/account/edit-profile" :class="{ 'bg-gray-300' : this.$nuxt.$route.path == '/user/account/edit-profile', 'bg-gray-300' : this.$nuxt.$route.path == '/user/account/change-password' }">Settings</DropDownItem>
+                <DropDownItem to="/user/account/profile/edit-profile" :class="{ 'bg-gray-300' : this.$nuxt.$route.path == '/user/account/profile/edit-profile' || this.$nuxt.$route.path == '/user/account/change-password' }">Settings</DropDownItem>
                 <button class="flex px-1 mt-4 hover:text-red-500" @click="signOut">sign out</button>
             </div>
         </template>
