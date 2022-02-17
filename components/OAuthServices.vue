@@ -25,6 +25,8 @@ export default {
 
     methods: {
         async OAuthservices(service) {
+            let submitButton = document.getElementById('submit');
+            this.$disableButton(submitButton);
             await this.$axios.$get(`/api/oauth/${service}`)
                 .then((res) => {
                     const newWindow = openWindow('', 'sign in')
