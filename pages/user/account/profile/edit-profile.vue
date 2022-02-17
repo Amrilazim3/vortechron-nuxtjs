@@ -67,14 +67,19 @@
                                 <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                             </ValidationProvider>
                         </div>
-                        <div class="mt-6 flex w-full">
+                        <div class="mt-6 flex w-full cursor-default">
                             <h2 class="w-1/3 self-center">Email</h2>
                             <p>{{ form.email }}</p>
-                            <template v-if="form.email_verified_at || form.service">
-                                <NuxtLink to="/user/account/profile/change-email" class="text-sm font-light text-blue-400 ml-2.5 self-end hover:underline">change</NuxtLink>
+                            <template v-if="!form.service">
+                                <NuxtLink to="/user/account/profile/change-email" class="text-sm text-blue-400 ml-2.5 self-end hover:underline cursor-pointer">change</NuxtLink>
                             </template>
                             <template v-else>
-                                <p class="text-sm font-light text-red-400 ml-2.5 self-center">email not verify</p>
+                                <div class="tooltip-wrap self-end">
+                                    <p class="text-sm text-red-400 ml-2.5">Email can't change</p>
+                                    <div class="tooltip-content rounded-md mt-5 ml-2.5 lg:w-max">
+                                        <p class="text-xs">You are sign in using {{ form.service }} service</p>
+                                    </div> 
+                                </div>
                             </template>
                         </div>
                         <div class="flex justify-between">
@@ -196,5 +201,19 @@ export default {
     transform: translate(-50%, -50%);
     padding: 2% 7%;
     border-radius: 0.5rem;
+}
+
+.tooltip-wrap {
+  position: relative;
+}
+.tooltip-wrap .tooltip-content {
+  display: none;
+  position: absolute;
+  top: 5%;
+  background-color: rgb(229 231 235);
+  padding: .5em;
+}
+.tooltip-wrap:hover .tooltip-content {
+  display: block;
 }
 </style>
