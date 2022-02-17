@@ -4,7 +4,7 @@
             <div>
                 <h3 class="text-2xl font-semibold text-center">Change Email</h3>
             </div>
-            <ValidationObserver ref="form" tag="div" v-slot="{ handleSubmit }">
+            <ValidationObserver ref="form" tag="div" v-slot="{ handleSubmit, untouched }">
                 <form @submit.prevent="handleSubmit(changeEmail)">
                     <div class="mt-6">
                         <h2>Current Email</h2>
@@ -21,8 +21,9 @@
                         <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
                     <div>
-                        <BlueButton type="submit" class="mt-4 w-full">Save</BlueButton>
+                        <BlueButton type="submit" id="submit" class="mt-4 w-full">Save</BlueButton>
                     </div>
+                    <p class="text-sm text-red-500 mt-2" :class="{ 'hidden' : untouched }">Notice : we will send email verification to your new email. Plase make sure your new email is correct</p>
                 </form>
             </ValidationObserver>
         </div>
@@ -32,7 +33,7 @@
 <script>
 export default {
     
-    middleware: 'auth',
+    middleware: ['auth'],
 
     head: {
         title: '| Change Email',
@@ -42,9 +43,7 @@ export default {
     },
 
     mounted() {
-        // if (this.$auth.user.service) {
-        //     this.getSocialServicePassword();
-        // }
+        this.user = JSON.parse(JSON.stringify(this.$auth.user));
     },
 
     data() {
@@ -54,22 +53,27 @@ export default {
                 email: '',
                 password: ''
             },
+            user: {}
         }
     },
 
     methods: {
         changeEmail() {
-            console.log(this.form);
-        },
-
-        getSocialServicePassword() {
-            console.log('check social service has password or not');
-            this.$axios.$get('/api/user/account/profile/change-email/get-sosial-service-password/' + this.$auth.user.id)
-                .then((resp) => {
-                    console.log(resp);
+            let errors = [];
+            let submitButton = document.getElementById('submit');
+            this.$disableButton(submitButton);
+            this.$axios.$post('/api/user/account/profile/change-email', this.form)
+                .then(() => {
+                    this.user.email = this.form.email;
+                    this.$auth.setUser(this.user);
+                    this.$router.push('/user/account/profile/edit-profile');
                 })
                 .catch((err) => {
-                    console.log(err);
+                    this.$undisableButton(submitButton);
+                    if (err.response.status = 422) {
+                        errors = err.response.data.errors;
+                        this.$refs.form.setErrors(errors);
+                    }
                 })
         },
     }
