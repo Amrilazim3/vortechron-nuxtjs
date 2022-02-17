@@ -80,9 +80,7 @@ export default {
     methods: {
         async signUp() {
             let submitButton = document.getElementById('submit');
-            submitButton.disabled = true;
-            submitButton.classList.add('bg-blue-800');
-            submitButton.classList.add('cursor-not-allowed');
+            this.$disableButton(submitButton);
             try {
                 let errors = []
                 await this.$axios.$get('/sanctum/csrf-cookie')
@@ -91,12 +89,9 @@ export default {
                         this.$auth.loginWith('laravelSanctum', { data: this.form })
                     })
                     .catch((err) => {
-                        submitButton.disabled = false;
-                        submitButton.classList.remove('bg-blue-800');
-                        submitButton.classList.remove('cursor-not-allowed');
+                        this.$undisableButton(submitButton);
                         if (err.response.status = 422) {
                             errors = err.response.data.errors;
-                            console.log(errors);
                             this.$refs.form.setErrors(errors);
                         }
                     })
