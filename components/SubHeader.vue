@@ -1,12 +1,5 @@
 <template>
-    <nav style="background:rgba(211, 211, 211, 1);" 
-    v-if="this.$route.path !== '/auth/sign-in' && 
-    this.$route.path !== '/auth/sign-up' && 
-    this.$route.path !== '/user/account/profile' && 
-    this.$route.path !== '/user/account/edit-profile' && 
-    this.$route.path !== '/user/account/change-password' &&
-    this.$route.path !== '/user/bookmarked' && 
-    this.$route.path !== '/user/liked' ">
+    <nav style="background:rgba(211, 211, 211, 1);">
         <div class="grid p-6 py-4 sm:justify-center sm:grid-cols-3 sm:max-w-xl sm:mx-auto md:max-w-2xl lg:grid-cols-4 lg:max-w-4xl xl:grid-cols-3 xl:max-w-5xl 2xl:max-w-7xl">
             <div class="inline-flex sm:col-span-2 sm:self-center lg:col-span-2 xl:col-span-1">
                 <ul class="sm:flex sm:space-x-8">
