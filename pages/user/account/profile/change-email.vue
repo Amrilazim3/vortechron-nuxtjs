@@ -65,6 +65,7 @@ export default {
             this.$axios.$post('/api/user/account/profile/change-email', this.form)
                 .then(() => {
                     this.user.email = this.form.email;
+                    this.user.email_verified_at = null;
                     this.$auth.setUser(this.user);
                     this.$router.push('/user/account/profile/edit-profile');
                 })
