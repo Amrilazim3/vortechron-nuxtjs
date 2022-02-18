@@ -46,7 +46,7 @@ export default {
     head: {
         title: '| Profile',
         meta: [
-            { hid: 'description', name: 'description', content: 'Bookmarked' }
+            { hid: 'description', name: 'description', content: 'Profile' }
         ],
     },
 }
