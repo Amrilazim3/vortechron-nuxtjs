@@ -43,7 +43,7 @@ export default {
     head: {
         title: '| Change Password',
         meta: [
-            { hid: 'description', name: 'description', content: 'Bookmarked' }
+            { hid: 'description', name: 'description', content: 'Change Password' }
         ],
     },
 
@@ -53,8 +53,13 @@ export default {
                 old_password: '',
                 new_password: '',
                 new_password_confirmation: ''
-            }
+            },
+            userPassword: '',
         }
+    },
+
+    created() {
+        this.getUserPassword();
     },
 
     methods: {
@@ -82,6 +87,16 @@ export default {
                     if (err.response.status == 422) {
                         errors = err.response.data.errors;
                         this.$refs.form.setErrors(errors);
+                    }
+                })
+        },
+
+        getUserPassword() {
+            this.$axios.$get('/api/user/account/change-password/get-password')
+                .then((resp) => {
+                    this.userPassword = resp.password;
+                    if (!this.userPassword) {
+                        this.$router.push('/user/account/notify-set-password');
                     }
                 })
         }
