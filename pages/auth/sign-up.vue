@@ -7,11 +7,13 @@
             <p class="text-base text-blue-700 font-medium md:text-center lg:text-left">Create your account now!</p>
         </div>
         <div style="background-color: rgba(243, 243, 243, 1);" class="rounded-lg shadow-xl mt-6 lg:flex-1 lg:self-center xl:mr-8 2xl:ml-40 2xl:mr-14">
-            <ValidationObserver ref="form" v-slot="{ handleSubmit }">
-                <form @submit.prevent="handleSubmit(signUp)" class="p-8">
+            <ValidationObserver tag="div" ref="form" v-slot="{ handleSubmit }">
+                <div class="px-8 pt-8">
                     <h3 class="text-2xl font-bold mb-4">Sign up to create account</h3>
                     <p class="text-base font-normal mt-4">Sign up in with :</p>
                     <OAuthServices class="flex mt-2 space-x-4"/>
+                </div>
+                <form @submit.prevent="handleSubmit(signUp)" class="px-8 pb-8">
                     <div class="flex my-6">
                         <div class="bg-gray-300 h-0.5 flex-1 self-center"></div>
                         <p class="text-center mx-4 text-sm">Or manually sign up</p>
