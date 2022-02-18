@@ -27,7 +27,7 @@
                     <div>
                         <BlueButton type="submit" id="submit" class="mt-2 w-full">Save</BlueButton>
                     </div>
-                    <p class="mt-2 text-sm text-green-500 font-medium hidden" id="password_changed_message">Your new password has been changed.</p>
+                    <p class="mt-2 text-sm text-green-500 font-medium hidden" id="password_changed_message">Your new password has been set.</p>
                 </form>
             </ValidationObserver>
         </div>
@@ -36,6 +36,8 @@
 
 <script>
 export default {
+    layout: 'hide-subnav',
+    
     middleware: 'auth',
 
     head: {

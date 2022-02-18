@@ -32,6 +32,7 @@
 
 <script>
 export default {
+    layout: 'hide-subnav',
     
     middleware: ['auth'],
 

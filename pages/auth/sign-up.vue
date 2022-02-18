@@ -58,6 +58,8 @@
 import guest from '../../middleware/guest'
 
 export default {
+
+    layout: 'hide-subnav',
     
     middleware: [guest],
 
