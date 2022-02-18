@@ -32,12 +32,12 @@
                         <InputField type="email" id="email" v-model="form.email"/>
                         <p class="text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
-                    <ValidationProvider tag="div" name="Password" rules="required|min:9" v-slot="{ errors }">
+                    <ValidationProvider tag="div" vid="password" name="Password" rules="required|min:9" v-slot="{ errors }">
                         <label for="password">Password</label>
                         <InputField type="password" id="password" v-model="form.password"/> 
                         <p class="text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
-                    <ValidationProvider tag="div" vid="password" name="Password Confirmation" rules="required|min:9" v-slot="{ errors }">
+                    <ValidationProvider tag="div" name="Password Confirmation" rules="required|min:9" v-slot="{ errors }">
                         <label for="password_confirmation">Password confirmation</label>
                         <InputField type="password" id="password_confirmation" v-model="form.password_confirmation"/> 
                         <p class="text-red-500">{{ errors[0] }}</p>
