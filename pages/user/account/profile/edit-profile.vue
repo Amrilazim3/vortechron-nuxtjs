@@ -49,21 +49,21 @@
                         <div class="mt-6 flex w-full">
                             <h2 class="w-1/3 self-center">Name</h2>
                             <ValidationProvider tag="div" vid="name" name="Name" rules="required|max:50" v-slot="{ errors }" class="w-2/3">
-                                <input type="text" name="name" class="bg-white h-8 w-full pl-2.5 border border-gray-400 focus:border-gray-600 focus:outline-none rounded-md" v-model="form.name"/>
+                                <input type="text" id="name" class="bg-white h-8 w-full pl-2.5 border border-gray-400 focus:border-gray-600 focus:outline-none rounded-md" v-model="form.name"/>
                                 <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                             </ValidationProvider>
                         </div>
                         <div class="mt-6 flex w-full">
                             <h2 class="w-1/3 self-center">Username</h2>
                             <ValidationProvider tag="div" vid="username" name="Username" rules="required|min:4|max:15" v-slot="{ errors }" class="w-2/3">
-                                <input type="text" name="username" class="bg-white h-8 w-full pl-2.5 border border-gray-400 focus:border-gray-600 focus:outline-none rounded-md" v-model="form.username" />
+                                <input type="text" id="username" class="bg-white h-8 w-full pl-2.5 border border-gray-400 focus:border-gray-600 focus:outline-none rounded-md" v-model="form.username" />
                                 <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                             </ValidationProvider>
                         </div>
                         <div class="mt-6 flex w-full">
                             <h2 class="w-1/3 self-center">Bio</h2>
                             <ValidationProvider tag="div" vid="bio" name="Bio" rules="max:100" v-slot="{ errors }" class="w-2/3">
-                                <textarea rows="4" cols="30" name="bio" class="bg-white w-full pl-2.5 border border-gray-400 focus:border-gray-600 focus:outline-none rounded-md" placeholder="Enter your bio here" v-model="form.bio"/>
+                                <textarea rows="4" cols="30" id="bio" class="bg-white w-full pl-2.5 border border-gray-400 focus:border-gray-600 focus:outline-none rounded-md" placeholder="Enter your bio here" v-model="form.bio"/>
                                 <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                             </ValidationProvider>
                         </div>
@@ -84,7 +84,7 @@
                         </div>
                         <div class="flex justify-between">
                             <div></div>
-                            <button class="mt-8 bg-blue-500 py-1.5 px-6 border-black rounded-md hover:bg-blue-600">
+                            <button type="submit" class="mt-8 bg-blue-500 py-1.5 px-6 border-black rounded-md hover:bg-blue-600">
                                 Save
                             </button>
                         </div>
