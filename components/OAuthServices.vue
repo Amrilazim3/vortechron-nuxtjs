@@ -31,6 +31,7 @@ export default {
                 .then((res) => {
                     const newWindow = openWindow('', 'sign in')
                     newWindow.location.href = res.url
+                    this.$undisableButton(submitButton);
                 })
         },
 
