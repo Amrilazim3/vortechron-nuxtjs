@@ -41,7 +41,7 @@
                             </template>
                             <div>
                                 <label for="file" class="bg-blue-400 cursor-pointer hover:bg-blue-500 inline-block mt-4 px-2 py-1 rounded-md">
-                                    <input type="file" id="file" accept="image/*" @change="handleFileUpload($event)" class="hidden"/>
+                                    <input type="file" id="file" name="file" accept="image/*" @change="handleFileUpload($event)" class="hidden"/>
                                     Select Photo
                                 </label>
                                 <button class="text-red-400" v-if="this.file" @click.prevent="clearFileForm">clear</button>
@@ -53,21 +53,21 @@
                             <div class="mt-6 flex w-full">
                                 <h2 class="w-1/3 self-center">Name</h2>
                                 <ValidationProvider tag="div" vid="name" name="Name" rules="required|max:50" v-slot="{ errors }" class="w-2/3">
-                                    <input type="text" id="name" class="bg-white h-8 w-full pl-2.5 border border-gray-400 focus:border-gray-600 focus:outline-none rounded-md" v-model="form.name"/>
+                                    <input type="text" id="name" name="name" class="bg-white h-8 w-full pl-2.5 border border-gray-400 focus:border-gray-600 focus:outline-none rounded-md" v-model="form.name"/>
                                     <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                                 </ValidationProvider>
                             </div>
                             <div class="mt-6 flex w-full">
                                 <h2 class="w-1/3 self-center">Username</h2>
                                 <ValidationProvider tag="div" vid="username" name="Username" rules="required|min:4|max:15" v-slot="{ errors }" class="w-2/3">
-                                    <input type="text" id="username" class="bg-white h-8 w-full pl-2.5 border border-gray-400 focus:border-gray-600 focus:outline-none rounded-md" v-model="form.username" />
+                                    <input type="text" id="username" name="username" class="bg-white h-8 w-full pl-2.5 border border-gray-400 focus:border-gray-600 focus:outline-none rounded-md" v-model="form.username" />
                                     <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                                 </ValidationProvider>
                             </div>
                             <div class="mt-6 flex w-full">
                                 <h2 class="w-1/3 self-center">Bio</h2>
                                 <ValidationProvider tag="div" vid="bio" name="Bio" rules="max:100" v-slot="{ errors }" class="w-2/3">
-                                    <textarea rows="4" cols="30" id="bio" class="bg-white w-full pl-2.5 border border-gray-400 focus:border-gray-600 focus:outline-none rounded-md" placeholder="Enter your bio here" v-model="form.bio"/>
+                                    <textarea rows="4" cols="30" id="bio" name="bio" class="bg-white w-full pl-2.5 border border-gray-400 focus:border-gray-600 focus:outline-none rounded-md" placeholder="Enter your bio here" v-model="form.bio"/>
                                     <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                                 </ValidationProvider>
                             </div>
@@ -119,6 +119,8 @@ export default {
     },
 
     mounted() {
+        this.form = JSON.parse(JSON.stringify(this.$auth.user));
+        
         if (this.$route.query.message == 'password_set') {
             let passwordSetMessage = document.getElementById('password_set_message');
             passwordSetMessage.classList.remove('hidden');
@@ -126,8 +128,6 @@ export default {
                 passwordSetMessage.classList.add('hidden');
             }, 3500);
         }
-
-        this.form = JSON.parse(JSON.stringify(this.$auth.user));
     },
 
     data() {
