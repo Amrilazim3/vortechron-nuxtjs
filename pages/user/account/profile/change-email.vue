@@ -12,12 +12,12 @@
                     </div>
                     <ValidationProvider tag="div" vid="email" name="Email" rules="required|email" v-slot="{ errors }" class="mt-6">
                         <h2>New Email</h2>
-                        <input type="email" class="bg-white h-8 w-full pl-2.5 border border-gray-400 rounded-md focus:border-gray-600 focus:outline-none" placeholder="Enter your new email" v-model="form.email">
+                        <input type="email" id="email" class="bg-white h-8 w-full pl-2.5 border border-gray-400 rounded-md focus:border-gray-600 focus:outline-none" placeholder="Enter your new email" v-model="form.email">
                         <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
                     <ValidationProvider tag="div" vid="password" name="Password" rules="required" v-slot="{ errors }" class="mt-6">
                         <h2>Password</h2>
-                        <input type="password" class="bg-white h-8 w-full pl-2.5 border border-gray-400 rounded-md focus:border-gray-600 focus:outline-none" placeholder="Enter your password" v-model="form.password">
+                        <input type="password" id="password" class="bg-white h-8 w-full pl-2.5 border border-gray-400 rounded-md focus:border-gray-600 focus:outline-none" placeholder="Enter your password" v-model="form.password">
                         <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
                     <div>
