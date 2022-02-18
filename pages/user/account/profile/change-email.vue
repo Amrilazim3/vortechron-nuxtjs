@@ -39,7 +39,7 @@ export default {
     head: {
         title: '| Change Email',
         meta: [
-            { hid: 'description', name: 'description', content: 'Bookmarked' }
+            { hid: 'description', name: 'description', content: 'Change Email' }
         ],
     },
 
