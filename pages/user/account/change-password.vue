@@ -13,12 +13,12 @@
                         <input type="password" id="old_password" class="bg-white h-8 w-full pl-2.5 border border-gray-400 rounded-md focus:border-gray-600 focus:outline-none" placeholder="Enter your old password" v-model="form.old_password">
                         <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
-                    <ValidationProvider tag="div" vid="new_password" name="New password" rules="required|min:9" v-slot="{ errors }" class="mt-6">
+                    <ValidationProvider tag="div" vid="new_password" name="New password" rules="required|min:9|verify_password" v-slot="{ errors }" class="mt-6">
                         <h2>New password</h2>
                         <input type="password" id="new_password" class="bg-white h-8 w-full pl-2.5 border border-gray-400 rounded-md focus:border-gray-600 focus:outline-none" placeholder="Enter your new password" v-model="form.new_password">
                         <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
-                    <ValidationProvider tag="div" vid="new_password_confirmation" name="New password confirmation" rules="required|min:9" v-slot="{ errors }" class="mt-6">
+                    <ValidationProvider tag="div" vid="new_password_confirmation" name="New password confirmation" rules="required" v-slot="{ errors }" class="mt-6">
                         <h2>New password confirmation</h2>
                         <input type="password" id="new_password_confirmation" class="bg-white h-8 w-full pl-2.5 border border-gray-400 rounded-md focus:border-gray-600 focus:outline-none" placeholder="Enter your new password confirmation" v-model="form.new_password_confirmation">
                         <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
@@ -74,9 +74,10 @@ export default {
                     let successMessage = document.getElementById('password_changed_message');
                     successMessage.classList.remove('hidden');
                     
-                    document.getElementById('old_password').value = '',
-                    document.getElementById('new_password').value = '',
-                    document.getElementById('new_password_confirmation').value = '',
+                    this.form.old_password = '';
+                    this.form.new_password = '';
+                    this.form.new_password_confirmation = '';
+                    this.$refs.form.reset();
 
                     setTimeout(function () {
                         successMessage.classList.add('hidden');
@@ -99,7 +100,7 @@ export default {
                         this.$router.push('/user/account/notify-set-password');
                     }
                 })
-        }
+        },
     }
 }
 </script>

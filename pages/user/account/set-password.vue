@@ -6,12 +6,12 @@
             </div>
             <ValidationObserver ref="form" tag="div" v-slot="{ handleSubmit }">
                 <form @submit.prevent="handleSubmit(setPassword)">
-                    <ValidationProvider tag="div" vid="password" name="Password" rules="required|min:9" v-slot="{ errors }" class="mt-6">
+                    <ValidationProvider tag="div" vid="password" name="Password" rules="required|min:9|verify_password" v-slot="{ errors }" class="mt-6">
                         <h2>Password</h2>
                         <input type="password" id="password" class="bg-white h-8 w-full pl-2.5 border border-gray-400 rounded-md focus:border-gray-600 focus:outline-none" placeholder="Enter your own password" v-model="form.password">
                         <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
-                    <ValidationProvider tag="div" vid="password_confirmation" name="Password confirmation" rules="required|min:9" v-slot="{ errors }" class="mt-6">
+                    <ValidationProvider tag="div" vid="password_confirmation" name="Password confirmation" rules="required" v-slot="{ errors }" class="mt-6">
                         <h2>Password confirmation</h2>
                         <input type="password" id="password_confirmation" class="bg-white h-8 w-full pl-2.5 border border-gray-400 rounded-md focus:border-gray-600 focus:outline-none" placeholder="Enter your password again" v-model="form.password_confirmation">
                         <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
