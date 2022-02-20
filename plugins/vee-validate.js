@@ -1,5 +1,5 @@
 import { required, email, min, max } from "vee-validate/dist/rules";
-import Vue from 'vue'
+import Vue from 'vue';
 import { ValidationProvider, ValidationObserver, extend, localize, setInteractionMode } from 'vee-validate';
 
 Vue.component('ValidationProvider', ValidationProvider);

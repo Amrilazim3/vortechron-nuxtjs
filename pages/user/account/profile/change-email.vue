@@ -20,6 +20,7 @@
                         <input type="password" id="password" class="bg-white h-8 w-full pl-2.5 border border-gray-400 rounded-md focus:border-gray-600 focus:outline-none" placeholder="Enter your password" v-model="form.password">
                         <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
+                    <NuxtLink to="/user/account/forgot-password" class="text-blue-400 hover:underline">Forgot password?</NuxtLink>
                     <div>
                         <BlueButton type="submit" id="submit" class="mt-4 w-full">Save</BlueButton>
                     </div>

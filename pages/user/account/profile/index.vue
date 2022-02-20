@@ -14,7 +14,7 @@
                 </template>
                 <div class="ml-4">
                     <h2 class="text-xl font-bold text-center">{{ this.$auth.user.username }}</h2>
-                    <NuxtLink to="/user/account/profile/edit-profile" class="bg-blue-500 font-medium px-4 py-0.5 rounded-full hover:bg-blue-600">
+                    <NuxtLink to="/user/account/profile/edit-profile" class="bg-blue-500 font-medium px-4 rounded-full hover:bg-blue-600">
                         edit profile
                     </NuxtLink>
                 </div>

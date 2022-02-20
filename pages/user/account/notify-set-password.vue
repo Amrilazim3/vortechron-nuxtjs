@@ -37,7 +37,8 @@ export default {
         },
 
         noSelected() {
-            this.$router.push('/user/account/profile/edit-profile');        }
+            this.$router.push('/user/account/profile/edit-profile');        
         }
+    }
 }
 </script>
