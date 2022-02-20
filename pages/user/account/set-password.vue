@@ -71,7 +71,7 @@ export default {
         },
 
         checkIfPasswordExists() {
-            this.$axios.$get('/api/user/account/change-password/get-password')
+            this.$axios.$get('/api/user/account/get-password')
                 .then((resp) => {
                     this.userPassword = resp.password;
                     if (this.userPassword) {

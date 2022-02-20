@@ -13,7 +13,8 @@
                         <input type="password" id="old_password" class="bg-white h-8 w-full pl-2.5 border border-gray-400 rounded-md focus:border-gray-600 focus:outline-none" placeholder="Enter your old password" v-model="form.old_password">
                         <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
-                    <ValidationProvider tag="div" vid="new_password" name="New password" rules="required|min:9|verify_password" v-slot="{ errors }" class="mt-6">
+                    <NuxtLink to="/user/account/forgot-password" class="text-blue-400 hover:underline">Forgot password?</NuxtLink>
+                    <ValidationProvider tag="div" vid="new_password" name="New password" rules="required|min:9|verify_password" v-slot="{ errors }" class="mt-4">
                         <h2>New password</h2>
                         <input type="password" id="new_password" class="bg-white h-8 w-full pl-2.5 border border-gray-400 rounded-md focus:border-gray-600 focus:outline-none" placeholder="Enter your new password" v-model="form.new_password">
                         <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
@@ -23,9 +24,8 @@
                         <input type="password" id="new_password_confirmation" class="bg-white h-8 w-full pl-2.5 border border-gray-400 rounded-md focus:border-gray-600 focus:outline-none" placeholder="Enter your new password confirmation" v-model="form.new_password_confirmation">
                         <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
-                    <p class="mt-2">Forgot password? <NuxtLink to="/user/account/profile/edit-profile" class="text-blue-400 hover:underline">reset here</NuxtLink></p>
                     <div>
-                        <BlueButton type="submit" id="submit" class="mt-2 w-full">Save</BlueButton>
+                        <BlueButton type="submit" id="submit" class="mt-4 w-full">Save</BlueButton>
                     </div>
                     <p class="mt-2 text-sm text-green-500 font-medium hidden" id="password_changed_message">Your new password has been set.</p>
                 </form>
@@ -93,7 +93,7 @@ export default {
         },
 
         getUserPassword() {
-            this.$axios.$get('/api/user/account/change-password/get-password')
+            this.$axios.$get('/api/user/account/get-password')
                 .then((resp) => {
                     this.userPassword = resp.password;
                     if (!this.userPassword) {
