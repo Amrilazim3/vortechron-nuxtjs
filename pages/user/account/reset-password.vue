@@ -88,12 +88,6 @@ export default {
                     }
                 });
         },
-
-        waitForSeconds() {
-            setTimeout(function() {
-                console.log('wait for sec');
-            }, 3500)
-        }
     }
 }
 </script>
