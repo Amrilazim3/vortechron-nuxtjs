@@ -29,10 +29,12 @@
                         <InputField type="password" id="password" v-model="form.password"/>
                         <p class="text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
+                    <NuxtLink to="/user/account/forgot-password" class="text-blue-400 hover:underline">Forgot password?</NuxtLink>
                     <p class="mt-2">Don't have account? <NuxtLink to="/auth/sign-up" class="text-blue-400 hover:underline">Sign up</NuxtLink> here</p>
                     <BlueButton type="submit" id="submit" class="mt-6 w-full transition duration-300">
                         Sign In
                     </BlueButton>
+                    <p class="mt-2 text-sm text-green-500 font-medium" v-if="resetPasswordMessage">You succesfully reset your password, please sign in.</p>
                 </form>
             </ValidationObserver>
         </div>
@@ -55,11 +57,18 @@ export default {
         ],
     },
 
+    mounted() {
+        if (this.$route.query.message == 'reset_password_success') {
+            this.resetPasswordMessage = true;
+        }
+    },
+
     data: () => ({
         form: {
             email: '',
             password: '',
         },
+        resetPasswordMessage: false
     }),
 
     methods: {
