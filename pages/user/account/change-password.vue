@@ -67,7 +67,7 @@ export default {
             let errors = [];
             let submitButton = document.getElementById('submit');
             this.$disableButton(submitButton);
-            this.$axios.$post('/api/user/account/change-password', this.form)
+            this.$axios.$patch('/api/user/account/change-password', this.form)
                 .then(() => {
                     this.$undisableButton(submitButton);
 
