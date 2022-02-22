@@ -72,7 +72,15 @@
                                 </ValidationProvider>
                             </div>
                             <div class="mt-6 flex w-full cursor-default">
-                                <h2 class="w-1/3 self-center">Email</h2>
+                                <h2 class="w-1/3 self-center">
+                                    Email
+                                    <template v-if="form.email_verified_at || form.service">
+                                        <span class="text-sm font-light text-blue-400">(verified)</span>
+                                    </template> 
+                                    <template v-else-if="!form.email_verified_at && !form.service">
+                                        <span class="text-sm font-light text-red-400">(unverified)</span>
+                                    </template>
+                                </h2>
                                 <p>{{ form.email }}</p>
                                 <template v-if="!form.service">
                                     <NuxtLink to="/user/account/profile/change-email" class="text-sm text-blue-400 ml-2.5 self-end hover:underline cursor-pointer">change</NuxtLink>
@@ -176,7 +184,7 @@ export default {
 
             if (answer) {
                 try {
-                    await this.$axios.$get('/api/user/account/profile/remove-profile-image')
+                    await this.$axios.$patch('/api/user/account/profile/remove-profile-image')
                     .then((resp) => {
                         this.form = resp.user
                         this.$auth.setUser(JSON.parse(JSON.stringify(resp.user)))

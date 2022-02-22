@@ -69,7 +69,7 @@ export default {
             let submitButton = document.getElementById('submit');
             this.$disableButton(submitButton);
             let errors = []
-            this.$axios.$post('api/user/account/reset-password', this.form)
+            this.$axios.$patch('api/user/account/reset-password', this.form)
                 .then(async () => {
                     if (this.$auth.loggedIn) {
                         await this.$auth.logout()

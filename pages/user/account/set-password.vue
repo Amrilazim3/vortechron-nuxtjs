@@ -57,7 +57,7 @@ export default {
             let errors = [];
             let submitButton = document.getElementById('submit');
             this.$disableButton(submitButton);
-            this.$axios.$post('/api/user/account/set-password', this.form)
+            this.$axios.$patch('/api/user/account/set-password', this.form)
                 .then(() => {
                     this.$router.push('/user/account/profile/edit-profile?message=password_set');
                 })

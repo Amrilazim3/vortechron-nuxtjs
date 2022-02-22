@@ -64,7 +64,7 @@ export default {
             let errors = [];
             let submitButton = document.getElementById('submit');
             this.$disableButton(submitButton);
-            this.$axios.$post('/api/user/account/profile/change-email', this.form)
+            this.$axios.$patch('/api/user/account/profile/change-email', this.form)
                 .then(() => {
                     this.user.email = this.form.email;
                     this.user.email_verified_at = null;
