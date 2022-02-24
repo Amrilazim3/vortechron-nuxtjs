@@ -19,9 +19,9 @@
                     </NuxtLink>
                 </div>
             </div>
-            <div class="font-semibold mt-3.5 space-x-3.5 text-xl md:-mt-0 md:self-center">
-                <span>0 follower</span>
-                <span>0 following</span>
+            <div class="font-semibold mt-3.5 space-x-3.5 text-xl md:-mt-0 md:self-center hidden md:block">
+                <span>{{ followers }} followers</span>
+                <span>{{ following }} following</span>
                 <span>0 post</span>
             </div>
         </div>
@@ -33,6 +33,11 @@
             <template v-else>
                 <p class="font-normal">{{ this.$auth.user.bio }}</p>
             </template>
+        </div>
+        <div class="font-semibold mt-3.5 space-x-3.5 text-xl md:-mt-0 md:self-center md:hidden">
+            <span>{{ followers }} followers</span>
+            <span>{{ following }} following</span>
+            <span>0 post</span>
         </div>
     </section>
 </template>
@@ -49,5 +54,26 @@ export default {
             { hid: 'description', name: 'description', content: 'Profile' }
         ],
     },
+
+    mounted() {
+        this.getFollowersAndFollowing();
+    },
+
+    data() {
+        return {
+            followers: 0,
+            following: 0
+        }
+    },
+
+    methods: {
+        getFollowersAndFollowing() {
+            this.$axios.$get('/api/user/account/profile')
+                .then((res) => {
+                    this.followers = res.followers.length;
+                    this.following = res.following.length;
+                })
+        },
+    }
 }
 </script>
