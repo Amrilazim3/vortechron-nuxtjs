@@ -61,9 +61,9 @@ export default {
     middleware: 'auth',
 
     head: {
-        title: `| test jap`,
+        title: `| Friend`,
         meta: [
-            { hid: 'description', name: 'description', content: 'Profile' }
+            { hid: 'description', name: 'description', content: 'Friend' }
         ],
     },
 
