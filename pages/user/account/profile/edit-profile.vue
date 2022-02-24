@@ -106,7 +106,7 @@
             <div class="modal hidden" id="modal">
                 <div class="modal-content">
                     <p class="text-center">Edit successful</p>
-                    <button class="w-full bg-gray-200 border border-gray-400 rounded-md py-1.5 mt-4">close</button>
+                    <button class="w-full bg-gray-200 hover:bg-gray-300 border border-gray-400 rounded-md py-1.5 mt-4">close</button>
                 </div>
             </div>
         </section>
