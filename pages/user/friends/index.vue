@@ -63,7 +63,7 @@
                         </div>
                     </template>
                     <p class="text-center font-semibold">Remove friend?</p>
-                    <p class="mb-4">this user will be remove from your friend lists.</p>
+                    <p class="mb-4 text-center">this user will be remove from your friend lists.</p>
                     <button class="w-full bg-red-200 hover:bg-red-400 border border-red-500 rounded-md py-1.5 mb-2.5" @click.prevent="deleteFriend">Remove</button>
                     <button class="w-full bg-gray-200 border border-gray-400 hover:bg-gray-400 rounded-md py-1.5" @click.prevent="isModalShow = false">Cancel</button>
                 </div>
