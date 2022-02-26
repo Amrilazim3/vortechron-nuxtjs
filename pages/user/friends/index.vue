@@ -43,30 +43,28 @@
                 </div>
             </div>
         </div>
-        <div :class="{'hidden': !isModalShow}" class="modal" @click="isModalShow = false" :id="modalData.username">
-            <div class="modal-content">
-                <div class="p-6">
-                    <div class="flex justify-between">
-                        <div></div>
-                        <button  @click.prevent="isModalShow = false">
-                            <img src="~/assets/xmark-solid.svg" alt="" class="h-4">
-                        </button>
-                    </div>
-                    <template v-if="!modalData.image_url">
-                        <div class="mx-auto max-w-max bg-gray-300 p-2.5 rounded-full">
-                            <img src="~/assets/default-profile-icon.svg" alt="" class="h-5">
-                        </div>
-                    </template>
-                    <template v-else>
-                        <div>
-                            <img class="h-10 w-10 rounded-full mx-auto" :src="modalData.image_full_url" id="image-url">
-                        </div>
-                    </template>
-                    <p class="text-center font-semibold">Remove friend?</p>
-                    <p class="mb-4 text-center">this user will be remove from your friend lists.</p>
-                    <button class="w-full bg-red-200 hover:bg-red-400 border border-red-500 rounded-md py-1.5 mb-2.5" @click.prevent="deleteFriend">Remove</button>
-                    <button class="w-full bg-gray-200 border border-gray-400 hover:bg-gray-400 rounded-md py-1.5" @click.prevent="isModalShow = false">Cancel</button>
+        <div :class="{'hidden': !isModalShow}" class="modal-friend" @click="isModalShow = false" :id="modalData.username">
+            <div class="p-6 modal-content-friend">
+                <div class="flex justify-between">
+                    <div></div>
+                    <button  @click.prevent="isModalShow = false">
+                        <img src="~/assets/xmark-solid.svg" alt="" class="h-4">
+                    </button>
                 </div>
+                <template v-if="!modalData.image_url">
+                    <div class="mx-auto max-w-max bg-gray-300 p-2.5 rounded-full">
+                        <img src="~/assets/default-profile-icon.svg" alt="" class="h-5">
+                    </div>
+                </template>
+                <template v-else>
+                    <div>
+                        <img class="h-10 w-10 rounded-full mx-auto" :src="modalData.image_full_url" id="image-url">
+                    </div>
+                </template>
+                <p class="text-center font-semibold">Remove friend?</p>
+                <p class="mb-4 text-center">this user will be remove from your friend lists.</p>
+                <button class="w-full bg-red-200 hover:bg-red-400 border border-red-500 rounded-md py-1.5 mb-2.5" @click.prevent="deleteFriend">Remove</button>
+                <button class="w-full bg-gray-200 border border-gray-400 hover:bg-gray-400 rounded-md py-1.5" @click.prevent="isModalShow = false">Cancel</button>
             </div>
         </div>
     </section>
@@ -210,7 +208,7 @@ export default {
 </script>
 
 <style>
-.modal {
+.modal-friend {
     position: fixed;
     background-color: rgba(0, 0, 0, 0.75);
     top: 0;
@@ -219,7 +217,7 @@ export default {
     left: 0;
     transition: all 0.3s;
 }
-.modal-content {
+.modal-content-friend {
     background-color: white;
     position: absolute;
     top: 50%;
