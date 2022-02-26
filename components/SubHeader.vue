@@ -31,19 +31,19 @@
                     </div>
                     <div v-for="user in users" :key="user.id">
                         <template v-if="user.id !== currentUserId">
-                                <div class="flex py-1.5 hover:bg-gray-200">
-                                    <template v-if="!user.image_url">
-                                        <button class="bg-gray-300 p-2.5 rounded-full cursor-pointer" @click.prevent="$router.push(`/users/${user.id}`)">
-                                            <img class="h-4 w-4" src="~/assets/default-profile-icon.svg" alt="">
-                                        </button>
-                                    </template>
-                                    <template v-else>
-                                        <button @click.prevent="$router.push(`/users/${user.id}`)">
-                                            <img class="h-8 w-8 rounded-full" :src="user.image_full_url" id="image-url">
-                                        </button>
-                                    </template>
-                                    <NuxtLink :to="`/users/${user.id}`" class="self-center ml-2.5 w-9/12 truncate">{{ user.username }}</NuxtLink>
-                                </div>
+                            <div class="flex py-1.5 hover:bg-gray-200">
+                                <template v-if="!user.image_url">
+                                    <button class="bg-gray-300 p-2.5 rounded-full cursor-pointer" @click.prevent="$router.push(`/users/${user.id}`)">
+                                        <img class="h-4 w-4" src="~/assets/default-profile-icon.svg" alt="">
+                                    </button>
+                                </template>
+                                <template v-else>
+                                    <button @click.prevent="$router.push(`/users/${user.id}`)">
+                                        <img class="h-8 w-8 rounded-full" :src="user.image_full_url" id="image-url">
+                                    </button>
+                                </template>
+                                <NuxtLink :to="`/users/${user.id}`" class="self-center ml-2.5 w-9/12 truncate">{{ user.username }}</NuxtLink>
+                            </div>
                             <div class="h-0.5 w-full bg-gray-200"></div>
                         </template>
                         <template v-else>
@@ -59,7 +59,7 @@
                                     </button>
                                 </template>
                                 <NuxtLink to="/user/account/profile" class="self-center ml-2.5 w-9/12 truncate">{{ user.username }}</NuxtLink>
-                                </div>
+                            </div>
                             <div class="h-0.5 w-full bg-gray-200"></div>
                         </template>
                     </div>
@@ -74,7 +74,7 @@
 export default {
     data() {
         return {
-            users: {},
+            users: [],
             currentUserId: null,
             showUserResult: false,
             noUserResult: false,
@@ -90,20 +90,22 @@ export default {
     methods: {
         async search(searchValue) {
             setTimeout(() => document.addEventListener('click', () => {this.showUserResult = false}), 0);
+
             if (searchValue == '') {
                     this.showUserResult = false;
                     return false;
             }
+
             clearTimeout(this.debounce);
             this.debounce = setTimeout(async () => {
                 await this.$axios.$get(`api/users?search=${searchValue}`)
                     .then((res) => { 
                         this.noUserResult = false,
                         this.showUserResult = true;
-                        if (res.users.length == 0) {
+                        if (res.users.data.length == 0) {
                             this.noUserResult = true;
                         }
-                        this.users = res.users;
+                        this.users = res.users.data;
                     })
             }, 500);
         }
