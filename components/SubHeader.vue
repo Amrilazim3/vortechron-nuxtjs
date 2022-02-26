@@ -24,7 +24,7 @@
                         @focus="search($event.target.value)"
                     >
                 </InputWithIcon>
-                <div class="absolute p-2 mt-2 z-10 bg-white rounded-md w-56" v-if="showSearchResult">
+                <div class="absolute p-2 mt-2 z-10 bg-white rounded-md w-56" v-if="showUserResult">
                     <div class="flex">
                         <p class="flex-1 text-center border-b-2 border-blue-400">users</p>
                         <p class="flex-1 text-center">posts</p>
@@ -63,7 +63,7 @@
                             <div class="h-0.5 w-full bg-gray-200"></div>
                         </template>
                     </div>
-                    <p v-if="noResult" class="text-black font-thin">no users found.</p>
+                    <p v-if="noUserResult" class="text-black font-thin">no users found.</p>
                 </div>
             </div>
         </div>
@@ -76,8 +76,8 @@ export default {
         return {
             users: {},
             currentUserId: null,
-            showSearchResult: false,
-            noResult: false,
+            showUserResult: false,
+            noUserResult: false,
         }
     },
 
@@ -89,23 +89,23 @@ export default {
 
     methods: {
         async search(searchValue) {
-            setTimeout(() => document.addEventListener('click', () => {this.showSearchResult = false}), 0);
+            setTimeout(() => document.addEventListener('click', () => {this.showUserResult = false}), 0);
             if (searchValue == '') {
-                    this.showSearchResult = false;
+                    this.showUserResult = false;
                     return false;
             }
             clearTimeout(this.debounce);
             this.debounce = setTimeout(async () => {
                 await this.$axios.$get(`api/users?search=${searchValue}`)
                     .then((res) => { 
-                        this.noResult = false,
-                        this.showSearchResult = true;
+                        this.noUserResult = false,
+                        this.showUserResult = true;
                         if (res.users.length == 0) {
-                            this.noResult = true;
+                            this.noUserResult = true;
                         }
                         this.users = res.users;
                     })
-            }, 600);
+            }, 500);
         }
     }
 }
