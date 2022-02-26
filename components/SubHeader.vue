@@ -107,7 +107,7 @@ export default {
                         }
                         this.users = res.users.data;
                     })
-            }, 500);
+            }, 300);
         }
     }
 }
