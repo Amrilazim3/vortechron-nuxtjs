@@ -14,19 +14,33 @@
                 </template>
                 <div class="ml-4">
                     <h2 class="text-xl font-bold text-center">{{ user.username }}</h2>
-                    <template v-if="user.isFriendWith">
-                        <button class="bg-blue-500 px-4 hover:text-red-500 rounded-md" @click.prevent="deleteFriend(user.id)">
+                    <template v-if="user.isSentFriendRequestFrom">
+                        <p class="text-sm font-light">this user wants to follow you</p>
+                        <button class="bg-blue-500 px-4 rounded-md hover:text-white" @click.prevent="acceptRequest(user.id)">
+                            Accept
+                        </button>
+                        <button class="bg-red-500 px-4 rounded-md hover:text-white" @click.prevent="denyRequest(user.id)">
+                            Ignore
+                        </button>
+                    </template>
+                    <template v-else-if="user.isSentFriendRequestTo">
+                        <button class="bg-gray-400 px-4 rounded-md hover:text-white" @click.prevent="cancelRequest(user.id)">
+                            Requested
+                        </button>
+                    </template>
+                    <template v-else-if="user.isFriendWith">
+                        <button class="bg-blue-500 px-4 hover:text-red-500 rounded-md" @click.prevent="unFollow(user.id)">
                             Following
                         </button>
                     </template>
-                    <template v-else-if="!user.isFriendWith && !user.isSentFriendRequestTo">
-                        <button class="bg-blue-500 hover:text-white px-4 rounded-md text-black" @click.prevent="followBack(user.id)">
-                            Follow
+                    <template v-else-if="!user.isFriendWith && user.isNotFollowBack">
+                        <button class="bg-blue-500 px-4 hover:text-white rounded-md" @click.prevent="follow(user.id)">
+                            Follow Back
                         </button>
                     </template>
-                    <template v-else-if="!user.isFriendWith && user.isSentFriendRequestTo">
-                        <button class="bg-gray-400 px-4 rounded-md hover:text-white" @click.prevent="cancelRequest(user.id)">
-                            Requested
+                    <template v-else-if="!user.isFriendWith">
+                        <button class="bg-blue-500 hover:text-white px-4 rounded-md text-black" @click.prevent="follow(user.id)">
+                            Follow
                         </button>
                     </template>
                 </div>
@@ -58,19 +72,17 @@
 export default {
     layout: 'hide-subnav',
 
-    middleware: 'auth',
-
     head: {
-        title: `| Friend`,
+        title: '| User',
         meta: [
-            { hid: 'description', name: 'description', content: 'Friend' }
+            { hid: 'description', name: 'description', content: 'User' }
         ],
     },
 
     mounted() {
-        this.getUser();
+        this.getUser()
     },
-
+    
     data() {
         return {
             user: {},
@@ -80,70 +92,104 @@ export default {
     },
 
     methods: {
-        getUser() {
-            this.$axios.$get(`/api/user/friends/${this.$route.params.id}`)
+        async getUser() {
+            await this.$axios.$get(`/api/user/friends/${this.$route.params.id}`)
                 .then((res) => {
+                    this.user = res.user;
                     this.followers = res.followers.length;
                     this.following = res.following.length;
-                    this.user = res.user;
-                    if (res.is_friend_with == 1) {
+
+                    if (res.is_friend_with == 1 && res.user_friend_with_auth_user == 1) {
                         this.user.isFriendWith = true;
-                    } else {
+                        this.user.isNotFollowBack = false;
+                        console.log('first condition');
+                    } else if (res.is_friend_with == 0 && res.user_friend_with_auth_user == 1) {
                         this.user.isFriendWith = false;
+                        this.user.isNotFollowBack = true;
+                        console.log('second condition');
+                    } else if (res.is_friend_with == 1 && res.user_friend_with_auth_user == 0) {
+                        this.user.isFriendWith = true;
+                        this.user.isNotFollowBack = false;
+                        console.log('third condition');
+                    }  else if (res.is_friend_with == 0 && res.user_friend_with_auth_user == 0) {
+                        this.user.isFriendWith = false;
+                        this.user.isNotFollowBack = false;
+                        console.log('fourth conditon');
                     }
+
                     if (res.is_sent_friend_request_to == 1) {
                         this.user.isSentFriendRequestTo = true;
                     } else {
                         this.user.isSentFriendRequestTo = false;
                     }
-                })
-                .catch((err) => {
-                    console.log(err);
+                    if (res.is_sent_friend_request_from == 1) {
+                        this.user.isSentFriendRequestFrom = true;
+                    } else {
+                        this.user.isSentFriendRequestFrom = false;
+                    }
+
+                    console.log(this.user);
                 })
         },
 
-        followBack(id) {
-            this.$axios.$post(`/api/user/friends/${id}`)
+        acceptRequest(id) {
+            this.$axios.$patch(`/api/users/accept/${id}`)
+                .then(() => {
+                    let user = this.user;
+                    this.user = {};
+                    user.isSentFriendRequestFrom = false;
+                    if (!user.isFriendWith) {
+                        user.isNotFollowBack = true;  
+                    } 
+                    this.user = user;
+                    this.following += 1;
+                })
+        },
+
+        denyRequest(id) {
+            this.$axios.$patch(`/api/users/deny/${id}`)
+                .then(() => {
+                    let user = this.user;
+                    this.user = {};
+                    user.isSentFriendRequestFrom = false;
+                    this.user = user;
+                })
+        },
+
+        follow(id) {
+            this.$axios.$post(`/api/users/${id}`)
                 .then(() => {
                     let user = this.user;
                     this.user = {};
                     user.isSentFriendRequestTo = true;
                     this.user = user;
                 })
-                .catch((err) => {
-                    console.log(err);
-                })
         },
 
         cancelRequest(id) {
-            this.$axios.$delete(`/api/user/friends/cancel-request/${id}`)
+            this.$axios.$delete(`/api/users/cancel-request/${id}`)
                 .then(() => {
                     let user = this.user;
                     this.user = {};
                     user.isSentFriendRequestTo = false;
                     this.user = user;
                 })
-                .catch((err) => {
-                    console.log(err);
-                })
         },
 
-        deleteFriend(id) {
+        unFollow(id) {
             let answer = confirm("If you unfollow this user, you need to make request again to be a friend.");
 
             if (answer) {
-                this.$axios.$delete(`/api/user/friends/${id}/unfollow`)
-                    .then((res) => {
-                        let user = this.user
-                        this.user = {}
+                this.$axios.$delete(`/api/users/unfollow/${id}`)
+                    .then(() => {
+                        let user = this.user;
+                        this.user = {};
                         user.isFriendWith = false;
                         this.user = user;
                     })
-                    .catch((err) => {
-                        console.log(err);
-                    })
             }
         },
-    },
+
+    }
 }
 </script>
