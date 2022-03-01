@@ -20,8 +20,8 @@
                 </div>
             </div>
             <div class="font-semibold mt-3.5 space-x-3.5 text-xl md:-mt-0 md:self-center hidden md:block">
-                <span>{{ followers }} followers</span>
-                <span>{{ following }} following</span>
+                <NuxtLink to="/user/followers">{{ followers }} followers</NuxtLink>
+                <NuxtLink to="/user/following">{{ following }} following</NuxtLink>
                 <span>0 post</span>
             </div>
         </div>
@@ -35,8 +35,8 @@
             </template>
         </div>
         <div class="font-semibold mt-3.5 space-x-3.5 text-xl md:-mt-0 md:self-center md:hidden">
-            <span>{{ followers }} followers</span>
-            <span>{{ following }} following</span>
+            <NuxtLink to="/user/followers">{{ followers }} followers</NuxtLink>
+            <NuxtLink to="/user/following">{{ following }} following</NuxtLink>
             <span>0 post</span>
         </div>
     </section>
