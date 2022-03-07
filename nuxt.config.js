@@ -34,7 +34,7 @@ export default {
     '~/plugins/vee-validate.js',
     '~/plugins/form/disable-button.js',
     '~/plugins/form/undisable-button.js',
-    '~/plugins/infiniteLoading'
+    '~/plugins/VueObserveVisibility'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
