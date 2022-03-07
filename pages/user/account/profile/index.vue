@@ -20,8 +20,8 @@
                 </div>
             </div>
             <div class="font-semibold mt-3.5 space-x-3.5 text-xl md:-mt-0 md:self-center hidden md:block">
-                <NuxtLink to="/user/followers">{{ followers }} followers</NuxtLink>
-                <NuxtLink to="/user/following">{{ following }} following</NuxtLink>
+                <NuxtLink to="/user/followers">{{ followersCount }} followers</NuxtLink>
+                <NuxtLink to="/user/following">{{ followingCount }} following</NuxtLink>
                 <span>0 post</span>
             </div>
         </div>
@@ -35,8 +35,8 @@
             </template>
         </div>
         <div class="font-semibold mt-3.5 space-x-3.5 text-xl md:-mt-0 md:self-center md:hidden">
-            <NuxtLink to="/user/followers">{{ followers }} followers</NuxtLink>
-            <NuxtLink to="/user/following">{{ following }} following</NuxtLink>
+            <NuxtLink to="/user/followers">{{ followersCount }} followers</NuxtLink>
+            <NuxtLink to="/user/following">{{ followingCount }} following</NuxtLink>
             <span>0 post</span>
         </div>
     </section>
@@ -61,8 +61,8 @@ export default {
 
     data() {
         return {
-            followers: 0,
-            following: 0
+            followersCount: 0,
+            followingCount: 0
         }
     },
 
@@ -70,8 +70,8 @@ export default {
         getFollowersAndFollowing() {
             this.$axios.$get('/api/user/account/profile')
                 .then((res) => {
-                    this.followers = res.followers.length;
-                    this.following = res.following.length;
+                    this.followersCount = res.followers_count;
+                    this.followingCount = res.following_count;
                 })
         },
     }
