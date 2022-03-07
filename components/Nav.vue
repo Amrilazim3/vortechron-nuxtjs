@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section class="fixed right-0 left-0 z-10">
         <Header />
 
         <SubHeader />
