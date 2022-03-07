@@ -5,36 +5,39 @@
         <div v-if="noFollowingMessage" class="flex h-56 justify-center">
             <h2 class="text-2xl self-end">No following yet</h2>
         </div>
-        <div v-else v-for="follow in following" :key="follow.id">
-            <div class="bg-white mb-1.5 rounded-md">
-                <div class="flex px-2 py-2 justify-between">
-                    <template v-if="!follow.image_url">
-                        <button class="mr-2 bg-gray-300 max-w-max p-2.5 rounded-full" @click.prevent="$router.push(`/users/${follow.id}`)">
-                            <img src="~/assets/default-profile-icon.svg" alt="" class="h-5">
-                        </button>
-                    </template>
-                    <template v-else>
-                        <button class="mr-2" @click.prevent="$router.push(`/users/${follow.id}`)">
-                            <img class="h-10 w-10 rounded-full" :src="follow.image_full_url" id="image-url">
-                        </button>
-                    </template>
-                    <div class="self-center flex-1 flex">
-                        <NuxtLink :to="`/users/${follow.id}`" class="cursor-pointer">{{ follow.username }}</NuxtLink>
-                    </div>
-                    <div class="self-center space-x-2">
-                        <template v-if="follow.isFriend">
-                            <button class="text-white bg-blue-400 hover:text-red-400 border border-gray-300 rounded py-0.5 px-2" @click.prevent="unFollow(follow.id)">
-                                Following
+        <div v-else>
+            <div v-for="follow in following" :key="follow.id">
+                <div class="bg-white mb-1.5 rounded-md">
+                    <div class="flex px-2 py-2 justify-between">
+                        <template v-if="!follow.image_url">
+                            <button class="mr-2 bg-gray-300 max-w-max p-2.5 rounded-full" @click.prevent="$router.push(`/users/${follow.id}`)">
+                                <img src="~/assets/default-profile-icon.svg" alt="" class="h-5">
                             </button>
                         </template>
                         <template v-else>
-                            <button class="text-blue-400 font-semibold hover:text-blue-600" @click.prevent="followBack(follow.id)">
-                                Follow
+                            <button class="mr-2" @click.prevent="$router.push(`/users/${follow.id}`)">
+                                <img class="h-10 w-10 rounded-full" :src="follow.image_full_url" id="image-url">
                             </button>
                         </template>
+                        <div class="self-center flex-1 flex">
+                            <NuxtLink :to="`/users/${follow.id}`" class="cursor-pointer">{{ follow.username }}</NuxtLink>
+                        </div>
+                        <div class="self-center space-x-2">
+                            <template v-if="followingIds.includes(follow.id)">
+                                <button class="text-white bg-blue-400 hover:text-red-400 border border-gray-300 rounded py-0.5 px-2" @click.prevent="unFollow(follow.id)">
+                                    Following
+                                </button>
+                            </template>
+                            <template v-else>
+                                <button class="text-blue-400 font-semibold hover:text-blue-600" @click.prevent="followBack(follow.id)">
+                                    Follow
+                                </button>
+                            </template>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div v-if="following.length" v-observe-visibility="handleScrolledToBottom"></div>
         </div>
     </section>
 </template>
@@ -53,87 +56,56 @@ export default {
     },
 
     mounted() {
-        this.getFollowing();
+        this.getFollowing(this.page);
     },
 
     data() {
         return {
             noFollowingMessage: false,
             following: [],
+            followingIds: [],
+            page: 1,
+            lastPage: 1,
         }
     },
 
     methods: {
-        getFollowing() {
-            this.$axios.$get('api/user/following')
-                .then((res) => {
-                    if (res.friends.length == 0) {
+        async getFollowing(page) {
+            await this.$axios.$get(`api/user/following?page=${page}`)
+                .then(({ following, following_ids }) => {
+                    if (following.data.length == 0) {
                         this.noFollowingMessage = true;
                     }
-
-                    this.following = res.friends;
-                    
-                    this.following.forEach(element => {
-                        let numOfOccurrences = this.following.reduce(function (n, data) {
-                            return  n + (data.id == element.id);
-                        }, 0);
-
-                        if (numOfOccurrences > 1) {
-                            element.isFriend = true;
-                            for (var a = this.following.length - 1; a >= 0; a--) {
-                                if (this.following[a].id == element.id) {
-                                    this.following.splice(a, 1);
-                                    a = -1;
-                                }
-                            }
-                        } else {
-                            if (res.following.indexOf(element.id) !== -1) {
-                                for (var b = this.following.length - 1; b >= 0; b--) {
-                                    if (this.following[b].id == element.id) {
-                                        element.isFriend = true;
-                                    }
-                                }
-                            }
-                        }
-                    });
-
-                    var followingFilter = this.following.filter((element) => {
-                        return element.isFriend == true;
-                    })
-
-                    if(followingFilter.length == 0) {
-                        this.noFollowingMessage = true;
-                    }
-
-                    this.following = followingFilter;
+                    this.lastPage = following.meta.last_page;
+                    this.followingIds.push(...Object.values(following_ids.data));
+                    this.following.push(...Object.values(following.data));
                 });
         },
 
         followBack(id) {
             this.$axios.$post(`/api/user/following/${id}`)
                 .then(() => {
-                    let following = this.following;
-                    this.following = [];
-                    let currentFollow = following.find(obj => {
-                        return obj.id == id;
-                    })
-                    currentFollow.isFriend = true;
-                    this.following  = following;
+                    this.followingIds.splice(id, 0, id);
                 })
         },
 
         unFollow(id) {
             this.$axios.$delete(`/api/user/following/unfollow/${id}`)
-                .then((res) => {
-                    let following = this.following;
-                    this.following = [];
-                    let currentFollow = following.find(obj => {
-                        return obj.id == id;
-                    })
-                    currentFollow.isFriend = false;
-                    this.following  = following;
+                .then(() => {
+                    let index = this.followingIds.indexOf(id);
+                    if (index > -1) {
+                        this.followingIds.splice(index, 1);
+                    }
                 })
-        }
+        },
+
+        handleScrolledToBottom(isVisible) {
+            if (!isVisible) { return }
+            if (this.page >= this.lastPage) { return }
+            this.page++;
+            this.getFollowing(this.page);                
+        },
+
     }
 
 }
