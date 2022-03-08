@@ -1,5 +1,5 @@
 <template>
-    <section class="grid p-6 pt-56 sm:max-w-xl sm:mx-auto md:max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl" :class="this.$auth.loggedIn && this.$auth.user.email_verified_at ? 'pt-80 xl:pt-56' : 'pt-56 xl:pt-36' ">
+    <section class="grid p-6 pt-56 sm:max-w-xl sm:mx-auto md:max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl" :class="this.$auth.loggedIn && this.$auth.user.email_verified_at ? 'xl:pt-36' : 'pt-72 xl:pt-56' ">
         <h1 class="text-4xl font-normal text-center my-8">Explore Blogs</h1>
         <div class="w-10/12 mx-auto sm:grid sm:grid-cols-6 sm:w-full">
             <div class="relative px-2 py-1 mb-6 sm:mr-3 bg-white border rounded-md shadow-2xl hover:bg-gray-200 transition duration-300 ease-in-out sm:col-span-3 lg:col-span-2">
