@@ -5,8 +5,8 @@
         <div v-if="noFollowersMessage" class="flex h-56 justify-center">
             <h2 class="text-2xl self-end">No followers yet</h2>
         </div>
-        <div v-else v-for="follower in followers" :key="follower.id">
-            <div class="bg-white mb-1.5 rounded-md">
+        <div v-else>
+            <div v-for="follower in followers" :key="follower.id" class="bg-white mb-1.5 rounded-md">
                 <div class="flex px-2 py-2 justify-between">
                     <template v-if="!follower.image_url">
                         <template v-if="$auth.user.id == follower.id">
@@ -44,7 +44,7 @@
                         <template v-if="$auth.user.id == follower.id">
                             <NuxtLink to="/user/account/profile">view</NuxtLink>
                         </template>
-                        <template v-else-if="follower.isFriend">
+                        <template v-else-if="followingIds.includes(follower.id)">
                             <button class="text-red-400 font-semibold hover:text-red-600" @click.prevent="unFollow(follower.id)">
                                 Unfollow
                             </button>
@@ -57,6 +57,7 @@
                     </div>
                 </div>
             </div>
+            <div v-observe-visibility="handleScrolledToBottom"></div>
         </div>
     </section>
 </template>
@@ -75,89 +76,58 @@ export default {
     },
 
     mounted() {
-        this.getFollowers();
+        if (this.$auth.user.id == this.$route.params.id) {
+            this.$router.push('/user/account/profile');
+        }
+        this.getFollowers(this.page);
     },
 
     data() {
         return {
             noFollowersMessage: false,
             followers: [],
+            followingIds: [],
+            page: 1,
+            lastPage: 1,
         }
     },
 
     methods: {
-        getFollowers() {
-            this.$axios.$get(`api/users/followers/${this.$route.params.id}`)
-                .then((res) => {
-                    if (res.friends.length == 0) {
+        getFollowers(page) {
+            this.$axios.$get(`api/users/followers/${this.$route.params.id}?page=${page}`)
+                .then(({ followers, following_ids }) => {
+                    if (followers.data.length == 0) {
                         this.noFollowersMessage = true;
                     }
-
-                    this.followers = res.friends;
-                    
-                    this.followers.forEach(element => {
-                        let numOfOccurrences = this.followers.reduce(function (n, data) {
-                            return  n + (data.id == element.id);
-                        }, 0);
-
-                        if (numOfOccurrences > 1) {
-                            if (res.auth_user_following.indexOf(element.id) !== -1 && res.auth_user_followers.indexOf(element.id) !== -1) {
-                                element.isFriend = true;
-                            } else if (res.auth_user_following.indexOf(element.id) !== -1 && res.auth_user_followers.indexOf(element.id) == -1) {
-                                element.isFriend = true;
-                            } else {
-                                element.isFriend = false;
-                            }
-                            for (var a = this.followers.length - 1; a >= 0; a--) {
-                                if (this.followers[a].id == element.id) {
-                                    this.followers.splice(a, 1);
-                                    a = -1;
-                                }
-                            }
-                        } else {
-                            if (res.auth_user_following.indexOf(element.id) !== -1 && res.auth_user_followers.indexOf(element.id) !== -1) {
-                                element.isFriend = true;
-                            } else if (res.auth_user_following.indexOf(element.id) !== -1 && res.auth_user_followers.indexOf(element.id) == -1) {
-                                element.isFriend = true;
-                            } else {
-                                element.isFriend = false;
-                            }
-                        }
-                    });
-
-                    if (this.followers.length == 0) {
-                        this.noFollowersMessage = true;
-                    }
-
-                    console.log(this.followers);
+                    this.lastPage = followers.meta.last_page;
+                    this.followingIds.push(...Object.values(following_ids.data));
+                    this.followers.push(...Object.values(followers.data));
                 });
         },
 
         follow(id) {
             this.$axios.$post(`/api/users/${id}`)
                 .then(() => {
-                    let followers = this.followers;
-                    this.followers = [];
-                    let currentFollower = followers.find(obj => {
-                        return obj.id == id;
-                    })
-                    currentFollower.isFriend = true;
-                    this.followers  = followers;
+                    this.followingIds.splice(id, 0, id);
                 })
         },
 
         unFollow(id) {
             this.$axios.$delete(`/api/users/unfollow/${id}`)
-                .then((res) => {
-                    let followers = this.followers;
-                    this.followers = [];
-                    let currentFollower = followers.find(obj => {
-                        return obj.id == id;
-                    })
-                    currentFollower.isFriend = false;
-                    this.followers  = followers;
+                .then(() => {
+                    let index = this.followingIds.indexOf(id);
+                    if (index > -1) {
+                        this.followingIds.splice(index, 1);
+                    }
                 })
-        }
+        },
+
+        handleScrolledToBottom(isVisible) {
+            if (!isVisible) { return }
+            if (this.page >= this.lastPage) { return }
+            this.page++;
+            this.getFollowers(this.page);                
+        },
 
     }
 
