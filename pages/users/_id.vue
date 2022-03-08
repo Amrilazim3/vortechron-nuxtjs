@@ -14,17 +14,17 @@
                 </template>
                 <div class="ml-4" v-if="$auth.loggedIn">
                     <h2 class="text-xl font-bold text-center">{{ user.username }}</h2>
-                    <template v-if="!user.isFriendWith && user.isFriendWithAuthUser">
+                    <template v-if="userIsFriendWithAuthUser && !isFriendWithUser">
                         <button class="bg-blue-500 px-4 hover:text-white rounded-md" @click.prevent="follow(user.id)">
                             Follow Back
                         </button>
                     </template>
-                    <template v-else-if="user.isFriendWith">
+                    <template v-else-if="isFriendWithUser">
                         <button class="bg-blue-500 px-4 hover:text-red-500 rounded-md" @click.prevent="unFollow(user.id)">
                             Following
                         </button>
                     </template>
-                    <template v-else-if="!user.isFriendWith">
+                    <template v-else-if="!isFriendWithUser">
                         <button class="bg-blue-500 hover:text-white px-4 rounded-md text-black" @click.prevent="follow(user.id)">
                             Follow
                         </button>
@@ -38,8 +38,8 @@
                 </div>
             </div>
             <div class="font-semibold mt-3.5 space-x-3.5 text-xl md:-mt-0 md:self-center hidden md:block">
-                <NuxtLink :to="`/users/followers/${user.id}`">{{ followers }} followers</NuxtLink>
-                <NuxtLink :to="`/users/following/${user.id}`">{{ following }} following</NuxtLink>
+                <NuxtLink :to="`/users/followers/${user.id}`">{{ followers_count }} followers</NuxtLink>
+                <NuxtLink :to="`/users/following/${user.id}`">{{ following_count }} following</NuxtLink>
                 <span>0 post</span>
             </div>
         </div>
@@ -53,8 +53,8 @@
             </template>
         </div>
         <div class="font-semibold mt-3.5 space-x-3.5 text-xl md:-mt-0 md:self-center md:hidden">
-            <NuxtLink :to="`/users/followers/${user.id}`">{{ followers }} followers</NuxtLink>
-            <NuxtLink :to="`/users/following/${user.id}`">{{ following }} following</NuxtLink>
+            <NuxtLink :to="`/users/followers/${user.id}`">{{ followers_count }} followers</NuxtLink>
+            <NuxtLink :to="`/users/following/${user.id}`">{{ following_count }} following</NuxtLink>
             <span>0 post</span>
         </div>
     </section>
@@ -73,6 +73,9 @@ export default {
     },
 
     mounted() {
+        if (this.$auth.user.id == this.$route.params.id) {
+            this.$router.push('/user/account/profile');
+        }
         if (!this.$auth.loggedIn) {
             this.showUserWhileUnAuthenticated()
         } else {
@@ -83,8 +86,10 @@ export default {
     data() {
         return {
             user: {},
-            followers: 0,
-            following: 0,
+            followers_count: 0,
+            following_count: 0,
+            isFriendWithUser: false,
+            userIsFriendWithAuthUser: false,
         }
     },
 
@@ -93,8 +98,10 @@ export default {
             await this.$axios.$get(`/api/users/view-only/${this.$route.params.id}`)
                 .then((res) => {
                     this.user = res.user;
-                    this.followers = res.followers.length;
-                    this.following = res.following.length;
+                    this.followers_count = res.followers_count;
+                    this.following_count = res.following_count;
+                    this.isFriendWithUser = res.is_friend_with_user;
+                    this.userIsFriendWithAuthUser = res.user_friend_with_auth_user;
                 })
                 .catch((err) => {
                     if (err.response.status == 404) {
@@ -107,26 +114,10 @@ export default {
             await this.$axios.$get(`/api/users/${this.$route.params.id}`)
                 .then((res) => {
                     this.user = res.user;
-                    this.followers = res.followers.length;
-                    this.following = res.following.length;
-
-                    if (res.is_friend_with == 1 && res.user_friend_with_auth_user == 1) {
-                        this.user.isFriendWith = true;
-                        this.user.isFriendWithAuthUser = true;
-                        this.user.isNotFollowBack = false;
-                    } else if (res.is_friend_with == 0 && res.user_friend_with_auth_user == 1) {
-                        this.user.isFriendWith = false;
-                        this.user.isFriendWithAuthUser = true;
-                        this.user.isNotFollowBack = true;
-                    } else if (res.is_friend_with == 1 && res.user_friend_with_auth_user == 0) {
-                        this.user.isFriendWith = true;
-                        this.user.isFriendWithAuthUser = false;
-                        this.user.isNotFollowBack = false;
-                    }  else if (res.is_friend_with == 0 && res.user_friend_with_auth_user == 0) {
-                        this.user.isFriendWith = false;
-                        this.user.isFriendWithAuthUser = false;
-                        this.user.isNotFollowBack = false;
-                    }
+                    this.followers_count = res.followers_count;
+                    this.following_count = res.following_count;
+                    this.isFriendWithUser = res.is_friend_with_user;
+                    this.userIsFriendWithAuthUser = res.user_friend_with_auth_user;
                 })
                 .catch((err) => {
                     if (err.response.status == 404) {
@@ -138,28 +129,18 @@ export default {
         follow(id) {
             this.$axios.$post(`/api/users/${id}`)
                 .then(() => {
-                    this.followers += 1;
-                    let user = this.user;
-                    this.user = {};
-                    user.isFriendWith = true;
-                    this.user = user;
+                    this.followers_count += 1;
+                    this.isFriendWithUser = true;
                 })
         },
 
         unFollow(id) {
             this.$axios.$delete(`/api/users/unfollow/${id}`)
                 .then(() => {
-                    this.followers -= 1;
-                    let user = this.user;
-                    this.user = {};
-                    user.isFriendWith = false;
-                    if (this.isFriendWithAuthUser) {
-                        user.isNotFollowBack = true;
-                    }
-                    this.user = user;
+                    this.followers_count -= 1;
+                    this.isFriendWithUser = false;
                 })
         },
-
     }
 }
 </script>
