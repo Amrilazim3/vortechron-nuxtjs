@@ -1,6 +1,6 @@
 <template>
     <section class="grid p-6 mt-10 sm:max-w-xl sm:mx-auto md:max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl">
-        <h2 class="text-2xl font-semibold">Friends</h2>
+        <h2 class="text-2xl font-normal">Friends</h2>
         <div class="h-1 mb-4 bg-gray-200 w-full"></div>
         <div v-if="noFriendMessage" class="flex h-56 justify-center">
             <h2 class="text-2xl self-end">No friends yet</h2>
