@@ -1,6 +1,6 @@
 <template>
     <section class="grid p-6 mt-10 sm:max-w-xl sm:mx-auto md:max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl">
-        <h2 class="text-2xl font-semibold">Following</h2>
+        <h2 class="text-2xl font-normal">{{ username }}'s following</h2>
         <div class="h-1 mb-4 bg-gray-200 w-full"></div>
         <div v-if="noFollowingMessage" class="flex h-56 justify-center">
             <h2 class="text-2xl self-end">No following yet</h2>
@@ -84,6 +84,7 @@ export default {
 
     data() {
         return {
+            username: '',
             noFollowingMessage: false,
             following: [],
             followingIds: [],
@@ -95,12 +96,14 @@ export default {
     methods: {
         getFollowing(page) {
             this.$axios.$get(`api/users/following/${this.$route.params.id}?page=${page}`)
-                .then(({ following, following_ids }) => {
+                .then(({ following, following_ids, username }) => {
+                    this.username = username;
+
                     if (following.data.length == 0) {
                         this.noFollowingMessage = true;
                     }
                     this.lastPage = following.meta.last_page;
-                    this.followingIds.push(...Object.values(following_ids.data));
+                    this.followingIds.push(...Object.values(following_ids));
                     this.following.push(...Object.values(following.data));
                 });
         },
