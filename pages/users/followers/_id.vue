@@ -57,7 +57,7 @@
                     </div>
                 </div>
             </div>
-            <div v-observe-visibility="handleScrolledToBottom"></div>
+            <div v-if="followers.length" v-observe-visibility="handleScrolledToBottom"></div>
         </div>
     </section>
 </template>
