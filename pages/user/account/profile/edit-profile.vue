@@ -96,7 +96,7 @@
                             </div>
                             <div class="flex justify-between">
                                 <div></div>
-                                <button type="submit" id="submit" class="mt-8 bg-blue-500 py-1.5 px-6 border-black rounded-md hover:bg-blue-600">
+                                <button type="submit" id="submit" class="mt-8 bg-blue-400 py-1.5 px-6 border-black rounded-md hover:bg-blue-500">
                                     Save
                                 </button>
                             </div>
