@@ -4,7 +4,7 @@
             <div class="flex mt-8">
                 <template v-if="this.$auth.user.image_url">
                     <div>
-                        <img class="h-16 w-16 rounded-full" :src="this.$auth.user.image_full_url" alt="">
+                        <img class="w-16 h-16 rounded-full" :src="this.$auth.user.image_full_url" alt="">
                     </div>
                 </template>
                 <template v-else>
@@ -14,7 +14,7 @@
                 </template>
                 <div class="ml-4">
                     <h2 class="text-xl font-bold text-center">{{ this.$auth.user.username }}</h2>
-                    <NuxtLink to="/user/account/profile/edit-profile" class="bg-blue-500 font-medium px-4 rounded-full hover:bg-blue-600">
+                    <NuxtLink to="/user/account/profile/edit-profile" class="px-4 font-medium bg-blue-500 rounded-full hover:bg-blue-600">
                         edit profile
                     </NuxtLink>
                 </div>
@@ -44,20 +44,20 @@
             <div class="h-0.5 bg-white mt-8"></div>
 
             <div v-if="noPost && $auth.user.email_verified_at || $auth.user.service">
-                <h1 class="text-center text-lg mt-52">No post yet, <NuxtLink to="/user/posts/create" class="text-blue-500 hover:underline">create your post</NuxtLink> now</h1>
+                <h1 class="text-lg text-center mt-52">No post yet, <NuxtLink to="/user/posts/create" class="text-blue-500 hover:underline">create your post</NuxtLink> now</h1>
             </div>
             <div v-else-if="noPost && !$auth.user.email_verified_at && !$auth.user.service">
-                <h1 class="text-center text-red-400 text-lg mt-44">Please verified your account to create a post</h1>
+                <h1 class="text-lg text-center text-red-400 mt-44">Please verified your account to create a post</h1>
             </div>
 
             <template v-if="!noPost">
-                <section class="w-10/12 mt-4 mx-auto sm:grid sm:grid-cols-6 sm:w-full">
-                    <div class="relative px-2 py-1 mb-6 sm:mr-3 bg-white border rounded-md shadow-2xl hover:bg-gray-100 transition duration-300 ease-in-out sm:col-span-3 lg:col-span-2" 
+                <section class="w-10/12 mx-auto mt-4 sm:grid sm:grid-cols-6 sm:w-full">
+                    <div class="relative px-2 py-1 mb-6 transition duration-300 ease-in-out bg-white border rounded-md shadow-2xl sm:mr-3 hover:bg-gray-100 sm:col-span-3 lg:col-span-2" 
                         v-for="post in posts"
                         :key="post.id"
                     >
                         <template v-if="!post.thumbnail">
-                            <div class="flex bg-gray-300 w-full h-32 mb-4">
+                            <div class="flex w-full h-32 mb-4 bg-gray-300">
                                 <p class="self-center mx-auto font-thin cursor-default">BLANK</p>
                             </div>
                         </template>
@@ -65,14 +65,14 @@
                             <img :src="post.thumbnail" alt="" class="w-full h-32 mb-4">
                         </template>
                         <template v-if="post.category[0]">
-                            <NuxtLink :to="`/user/posts/categories/${post.category_slug[0]}`" class="text-sm text-blue-400 hover:underline">{{ post.category[0] }}</NuxtLink>
+                            <NuxtLink :to="`/posts/categories/${post.category_slug[0]}`" class="text-sm text-blue-400 hover:underline">{{ post.category[0] }}</NuxtLink>
                         </template>
                         <template v-else>
                             <p class="text-sm opacity-0 cursor-default">hidden</p>
                         </template>
                         <NuxtLink :to="`/user/posts/${post.slug}`" class="flex text-lg font-bold mt-2.5 hover:underline">{{ post.title }}</NuxtLink>
-                        <p class="mt-4 text-sm h-20">{{ post.excerpt }}</p>
-                        <div class="pb-2 bottom-0 flex justify-between">
+                        <p class="h-20 mt-4 text-sm">{{ post.excerpt }}</p>
+                        <div class="bottom-0 flex justify-between pb-2">
                             <VueMomentsAgo prefix="posted" suffix="ago" :date="post.created_at" lang="en" class="self-center" />
                             <button class="self-center bg-blue-300 px-4 py-1.5 border rounded-md hover:bg-blue-400" @click="$router.push(`/user/posts/${post.slug}`)">View</button>
                         </div>
