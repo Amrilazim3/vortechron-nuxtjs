@@ -1,20 +1,21 @@
 <template>
     <div v-if="this.$auth.loggedIn">
         <template v-if="!this.$auth.user.service">
-            <div v-if="!this.$auth.user.email_verified_at" class="bg-red-200 py-2">
-                <h1 class="text-center font-medium text-lg">PLEASE VERIFIED YOUR EMAIL</h1>
-                <p class="text-center text-sm">You cannot create a post until you verify your email</p>
-                <p class="text-center text-sm">If you didn't receive email verification link, you can <button class="underline hover:text-blue-400" @click.prevent="resendEmailVerification">resend here</button></p>
-                <p class="text-center text-sm text-blue-500" v-if="verificationResend">Email verification link has been send! please check your email</p>
+            <div v-if="!this.$auth.user.email_verified_at" class="py-2 bg-red-200">
+                <h1 class="text-lg font-medium text-center">PLEASE VERIFIED YOUR EMAIL</h1>
+                <p class="text-sm text-center">You cannot create a post until you verify your email</p>
+                <p class="text-sm text-center">If you didn't receive email verification link, you can <button class="underline hover:text-blue-400" @click.prevent="resendEmailVerification">resend here</button></p>
+                <p class="text-sm text-center text-yellow-600" v-if="triggerResendButton">It may take a seconds, Please wait...</p>
+                <p class="text-sm text-center text-blue-500" v-if="verificationResend">Email verification link has been send! please check your email. Please try again if you do not receive it.</p>
             </div>
             <div v-if="successVerified">
                 <div class="bg-green-400">
-                    <p class="text-center text-sm">YOUR EMAIL IS VERIFIED!</p>
+                    <p class="text-sm text-center">YOUR EMAIL IS VERIFIED!</p>
                 </div>
             </div>
             <div v-if="alreadyVerified">
                 <div class="bg-green-400">
-                    <p class="text-center text-sm">YOUR EMAIL ALREADY VERIFIED!</p>
+                    <p class="text-sm text-center">YOUR EMAIL ALREADY VERIFIED!</p>
                 </div>
             </div>
         </template>
@@ -37,17 +38,19 @@ export default {
     data: () => ({
         successVerified: false,
         alreadyVerified: false,
-        verificationResend: false
+        verificationResend: false,
+        triggerResendButton: false
     }),
 
     methods: {
         resendEmailVerification () {
+            this.triggerResendButton = true;
             this.$axios.$post('/api/email/verify/resend', this.$auth.user)
                 .then((resp) => {
                     if (resp.message) {
                         this.verificationResend = true;
+                        this.triggerResendButton = false;
                     }
-                    setTimeout(this.removeVerficationResend, 5000);
                 })
                 .catch((err) => {
                     console.log(err);
@@ -61,10 +64,6 @@ export default {
         removeAlreadyVerified() {
             this.alreadyVerified = false;
         },
-
-        removeVerficationResend() {
-            this.verificationResend = false;
-        }
     }
 }
 </script>
