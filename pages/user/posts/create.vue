@@ -1,43 +1,43 @@
 <template>
     <section class="grid p-6 sm:max-w-xl sm:mx-auto md:max-w-2xl lg:max-w-3xl">
-        <ValidationObserver class="bg-white py-10 px-6 rounded-md mt-8" ref="formObserver" tag="div" v-slot="{ handleSubmit }">
+        <ValidationObserver class="px-6 py-10 mt-8 bg-white rounded-md" ref="formObserver" tag="div" v-slot="{ handleSubmit }">
             <form ref="form" @submit.prevent="handleSubmit(create)">
                 <h1 class="text-2xl font-semibold text-center">Create Post</h1>
-                <div class="mt-6 w-full">
+                <div class="w-full mt-6">
                     <h2 class="mb-2">Title</h2>
                     <ValidationProvider tag="div" vid="title" name="Title" rules="required|max:50" v-slot="{ errors }">
                         <input type="text" id="title" name="title" class="bg-white h-8 w-full pl-2.5 border border-gray-400 focus:border-gray-600 focus:outline-none rounded-md" v-model="form.title"/>
                         <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
                 </div>
-                <div class="mt-6 w-full">
+                <div class="w-full mt-6">
                     <h2 class="mb-2">Thumbnail Image</h2>
                     <div class="flex">
                         <template v-if="selectedImage == ''">
-                            <div class="flex h-20 w-32 rounded-md bg-gray-200 border border-black">
-                                <h1 class="mx-auto self-center text-3xl text-gray-600 cursor-default">?</h1>
+                            <div class="flex w-32 h-20 bg-gray-200 border border-black rounded-md">
+                                <h1 class="self-center mx-auto text-3xl text-gray-600 cursor-default">?</h1>
                             </div>
                         </template>
                         <template v-else>
                             <div>
-                                <img id="output-selected-file" :src="selectedImage" class="h-20 w-32 rounded-md" alt="thumbnail picture" />
+                                <img id="output-selected-file" :src="selectedImage" class="w-32 h-20 rounded-md" alt="thumbnail picture" />
                                 <button class="text-red-500" @click.prevent="clearFileForm">clear</button>
                             </div>
                         </template>
-                        <label for="file" class="bg-blue-400 cursor-pointer hover:bg-blue-500 inline-block ml-10 self-center px-2 py-1 rounded-md">
+                        <label for="file" class="self-center inline-block px-2 py-1 ml-10 bg-blue-400 rounded-md cursor-pointer hover:bg-blue-500">
                             <input type="file" id="file" name="file" accept="image/*" @change="handleFileUpload($event)" class="hidden"/>
                             Select Thumbnail
                         </label>
                     </div>
                 </div>
-                <div class="mt-6 w-full">
+                <div class="w-full mt-6">
                     <h2 class="mb-2">Excerpt</h2>
                     <ValidationProvider tag="div" vid="excerpt" name="Excerpt" rules="required|max:100" v-slot="{ errors }">
                         <input type="text" id="excerpt" name="excerpt" class="bg-white h-8 w-full pl-2.5 border border-gray-400 focus:border-gray-600 focus:outline-none rounded-md" v-model="form.excerpt"/>
                         <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
                 </div>
-                <div class="mt-6 w-full">
+                <div class="w-full mt-6">
                     <h2 class="mb-2">Body</h2>
                     <ValidationProvider tag="div" vid="body" name="Body" rules="required|min:100" v-slot="{ errors }">
                         <quill-editor 
@@ -48,7 +48,7 @@
                         <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
                 </div>
-                <div class="mt-6 w-full">
+                <div class="w-full mt-6">
                     <h2 class="mb-2">Categories</h2>
                     <select name="category" id="category" class="border border-black rounded-md" v-model="form.category">
                         <option value="" selected hidden>Select</option>
@@ -92,7 +92,6 @@ export default {
             this.$router.push('/user/account/profile');
         }
         this.getCategories();
-
     },
 
     data() {
