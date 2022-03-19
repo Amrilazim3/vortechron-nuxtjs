@@ -31,7 +31,7 @@
                 <p class="font-normal">No bio yet</p>
             </template>
             <template v-else>
-                <p class="font-normal" v-html="this.$auth.user.bio">
+                <p class="w-1/3 font-normal" v-html="this.$auth.user.bio">
                     {{ this.$auth.user.bio }}
                 </p>
             </template>
