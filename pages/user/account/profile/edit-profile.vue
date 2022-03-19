@@ -67,7 +67,12 @@
                             <div class="flex w-full mt-6">
                                 <h2 class="self-center w-1/3">Bio</h2>
                                 <ValidationProvider tag="div" vid="bio" name="Bio" rules="max:100" v-slot="{ errors }" class="w-2/3">
-                                    <textarea rows="4" cols="30" id="bio" name="bio" class="bg-white w-full pl-2.5 border border-gray-400 focus:border-gray-600 focus:outline-none rounded-md" placeholder="Enter your bio here" v-model="form.bio"/>
+                                    <quill-editor
+                                        class="border border-gray-300 rounded-md"
+                                        v-model="form.bio"
+                                        ref="myQuillEditor"
+                                        :options="editorOption" 
+                                    />
                                     <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                                 </ValidationProvider>
                             </div>
@@ -114,6 +119,9 @@
 </template>
 
 <script>
+import 'quill/dist/quill.snow.css'
+import { quillEditor } from 'vue-quill-editor';
+
 export default {
     layout: 'hide-subnav',
     
@@ -124,6 +132,10 @@ export default {
         meta: [
             { hid: 'description', name: 'description', content: 'Edit Profile' }
         ],
+    },
+
+    components: {
+        quillEditor
     },
 
     mounted() {
@@ -142,7 +154,14 @@ export default {
         return {
             form: {},
             file: '',
-            selectedImage: ''
+            selectedImage: '',
+
+            editorOption: {
+                debug: null,
+                placeholder: 'Type your bio here...',
+                readOnly: true,
+                theme: 'snow'
+            },
         }
     },
 
@@ -152,6 +171,7 @@ export default {
                 let errors = [];
                 let formData = new FormData(this.$refs.form)
                 formData.append('file', this.file)
+                formData.append('bio', this.form.bio)
                 await this.$axios.$post('/api/user/account/profile/edit', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
@@ -238,5 +258,13 @@ export default {
 }
 .tooltip-wrap:hover .tooltip-content {
   display: block;
+}
+
+.ql-editor {
+    height: 20vh;
+}
+
+.ql-toolbar {
+    display: none;
 }
 </style>
