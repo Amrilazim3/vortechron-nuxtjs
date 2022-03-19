@@ -49,7 +49,7 @@
                 <h1 class="text-lg text-center mt-52">No post yet, <NuxtLink to="/user/posts/create" class="text-blue-500 hover:underline">create your post</NuxtLink> now</h1>
             </div>
             <div v-else-if="noPost && !$auth.user.email_verified_at && !$auth.user.service">
-                <h1 class="text-lg text-center text-red-400 mt-44">Please verified your account to create a post</h1>
+                <h1 class="mt-40 text-lg text-center">Please verified your account to create a post</h1>
             </div>
 
             <template v-if="!noPost">
