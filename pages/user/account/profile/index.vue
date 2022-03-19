@@ -31,7 +31,9 @@
                 <p class="font-normal">No bio yet</p>
             </template>
             <template v-else>
-                <p class="font-normal">{{ this.$auth.user.bio }}</p>
+                <p class="font-normal" v-html="this.$auth.user.bio">
+                    {{ this.$auth.user.bio }}
+                </p>
             </template>
         </div>
         <div class="font-semibold mt-3.5 space-x-3.5 text-xl md:-mt-0 md:self-center md:hidden">
