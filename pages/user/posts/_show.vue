@@ -1,7 +1,7 @@
 <template>
     <section class="grid p-6 sm:max-w-xl sm:mx-auto md:max-w-2xl lg:max-w-4xl">
         <main class="px-8 py-6 mt-10 bg-white rounded-md">
-            <button class="flex mt-10" @click.prevent="$router.back()">
+            <button class="flex my-10" @click.prevent="$router.back()">
                 <img src="~/assets/single-drop-down-arrow.svg" alt="" class="origin-center transform rotate-90">
                 <h4 class="self-center text-lg font-semibold">back</h4>
             </button>
