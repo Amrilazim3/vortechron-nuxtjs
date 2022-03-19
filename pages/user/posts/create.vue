@@ -108,7 +108,7 @@ export default {
             categories: [],
 
             editorOption: {
-                debug: 'info',
+                debug: null,
                 placeholder: 'Type your post here...',
                 readOnly: true,
                 theme: 'snow'
