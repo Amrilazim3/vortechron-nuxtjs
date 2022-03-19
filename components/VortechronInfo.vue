@@ -1,5 +1,5 @@
 <template>
-    <ul class="inline-block xl:flex xl:ml-8 xl:space-x-8">
+    <ul class="inline-block space-x-8 xl:flex xl:ml-8 xl:space-x-8">
         <button @click.prevent="openAboutUs">
             <li class="block hover:text-gray-500">About us</li>
         </button>
