@@ -49,7 +49,9 @@
                 <p class="font-normal">No bio yet</p>
             </template>
             <template v-else>
-                <p class="font-normal">{{ user.bio }}</p>
+                <p class="w-1/3 font-normal" v-html="user.bio">
+                    {{ user.bio }}
+                </p>
             </template>
         </div>
         <div class="font-semibold mt-3.5 space-x-3.5 text-xl md:-mt-0 md:self-center md:hidden">
@@ -77,7 +79,7 @@
                             </div>
                         </template>
                         <template v-else>
-                            <img :src="post.thumbnail" alt="" class="w-full h-32 mb-4">
+                            <img :src="post.thumbnail" alt="" class="h-32 mb-4 bg-gray-300" style='width: 100%; object-fit: contain'>
                         </template>
                         <template v-if="post.category[0]">
                             <NuxtLink :to="`/posts/categories/${post.category_slug[0]}`" class="text-sm text-blue-400 hover:underline">{{ post.category[0] }}</NuxtLink>
