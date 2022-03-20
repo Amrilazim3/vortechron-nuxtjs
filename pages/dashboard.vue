@@ -2,7 +2,7 @@
     <section class="grid p-6 pt-56 sm:pt-44 sm:max-w-xl sm:mx-auto md:max-w-2xl lg:max-w-4xl xl:pt-36 xl:max-w-5xl 2xl:max-w-7xl" :class="this.$auth.loggedIn && !this.$auth.user.email_verified_at && !this.$auth.user.service ? 'pt-72 sm:pt-64 xl:pt-56' : '' ">
         <h1 class="my-8 text-4xl font-normal text-center">Explore Blogs</h1>
 
-            <section class="w-10/12 mx-auto mt-4 sm:grid sm:grid-cols-6 sm:w-full">
+            <section v-if="!noPost" class="w-10/12 mx-auto mt-4 sm:grid sm:grid-cols-6 sm:w-full">
                 <div class="relative px-2 py-1 mb-6 transition duration-300 ease-in-out bg-white border rounded-md shadow-2xl sm:mr-3 hover:bg-gray-100 sm:col-span-3 lg:col-span-2" 
                     v-for="post in posts"
                     :key="post.user_id"
@@ -14,7 +14,7 @@
                             </div>
                         </template>
                         <template v-else>
-                            <img :src="post.thumbnail" alt="" class="w-full h-32 mb-4">
+                            <img :src="post.thumbnail" alt="" class="h-32 mb-4 bg-gray-300" style='width: 100%; object-fit: contain'>
                         </template>
                         <template v-if="post.category[0]">
                             <NuxtLink :to="`/posts/categories/${post.category_slug[0]}`" class="text-sm text-blue-400 hover:underline">{{ post.category[0] }}</NuxtLink>
@@ -51,7 +51,7 @@
                             </div>
                         </template>
                         <template v-else>
-                            <img :src="post.thumbnail" alt="" class="w-full h-32 mb-4">
+                            <img :src="post.thumbnail" alt="" class="h-32 mb-4 bg-gray-300" style='width: 100%; object-fit: contain'>
                         </template>
                         <template v-if="post.category[0]">
                             <NuxtLink :to="`/posts/categories/${post.category_slug[0]}`" class="text-sm text-blue-400 hover:underline">{{ post.category[0] }}</NuxtLink>
@@ -84,6 +84,9 @@
                 </div>
                 <div v-if="posts.length" v-observe-visibility="handleScrolledToBottom"></div>
             </section>
+            <section v-else class="mx-auto mt-4 sm:w-full">
+                <p class="mt-24 text-lg font-normal text-center">No posts yet...</p>
+            </section>
             
     </section>
 </template>
@@ -115,7 +118,8 @@ export default {
             page: 1,
             lastPage: 1,
             posts: [],
-            currentUserId: null
+            currentUserId: null,
+            noPost: false
         }
     },
 
@@ -123,6 +127,9 @@ export default {
         getAllPosts(page) {
             this.$axios.$get(`/api/posts?page=${page}`)
                 .then(({ posts }) => {
+                    if (posts.data.length == 0) {
+                        this.noPost = true;
+                    }
                     this.lastPage = posts.meta.last_page;
                     this.posts.push(...posts.data);
                 })
