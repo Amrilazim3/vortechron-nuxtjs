@@ -88,7 +88,7 @@ export default {
                     this.image_url = post.image_url[0];
                     this.image_full_url = post.image_full_url;
                     this.category = post.category[0];
-                    this.categorySlug = post.categorySlug[0];
+                    this.categorySlug = post.category_slug[0];
                 })
         }
     }
