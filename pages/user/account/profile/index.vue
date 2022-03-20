@@ -64,7 +64,7 @@
                             </div>
                         </template>
                         <template v-else>
-                            <img :src="post.thumbnail" alt="" class="w-full h-32 mb-4">
+                            <img :src="post.thumbnail" alt="" class="h-32 mb-4 bg-gray-300" style='width: 100%; object-fit: contain'>
                         </template>
                         <template v-if="post.category[0]">
                             <NuxtLink :to="`/posts/categories/${post.category_slug[0]}`" class="text-sm text-blue-400 hover:underline">{{ post.category[0] }}</NuxtLink>
