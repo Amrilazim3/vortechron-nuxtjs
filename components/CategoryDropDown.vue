@@ -11,10 +11,10 @@
 
         <!-- show the lists -->
         <template>
-            <div v-if="openCategory" class="absolute z-50 w-full flex flex-col py-2 px-1 overflow-auto bg-gray-100 rounded-xl max-h-28 sm:max-h-36">
-                <DropDownItem to="/">One</DropDownItem>
-                <DropDownItem to="/">Two</DropDownItem>
-                <DropDownItem to="/">Three</DropDownItem>
+            <div v-if="openCategory" class="absolute z-50 flex flex-col px-1 py-2 overflow-auto bg-gray-100 rounded-xl max-h-28 sm:max-h-36">
+                <DropDownItem :to="`/posts/categories/${category.slug}`" v-for="category in categories" :key="category.name">
+                    {{ category.name }}
+                </DropDownItem>
             </div>
         </template>
     </DropDown>
@@ -22,8 +22,13 @@
 
 <script>
 export default {
+    mounted() {
+        this.getCategories();
+    },
+
     data: () => ({
         openCategory: false,
+        categories: [],
     }),
 
     methods: {
@@ -42,7 +47,14 @@ export default {
         hideCategory() {
             this.openCategory = false;
             document.removeEventListener('click', this.hideCategory);
-        }
+        },
+
+        getCategories() {
+            this.$axios.$get('/api/posts/categories')
+                .then(({ categories }) => {
+                    this.categories.push(...categories);
+                })    
+        },
     },
 }
 </script>
