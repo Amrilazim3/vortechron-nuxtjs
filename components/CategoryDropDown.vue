@@ -12,7 +12,12 @@
         <!-- show the lists -->
         <template>
             <div v-if="openCategory" class="absolute z-50 flex flex-col px-1 py-2 overflow-auto bg-gray-100 rounded-xl max-h-28 sm:max-h-36">
-                <DropDownItem :to="`/posts/categories/${category.slug}`" v-for="category in categories" :key="category.name">
+                <DropDownItem 
+                    :to="`/posts/categories/${category.slug}`" 
+                    v-for="category in categories"
+                    :key="category.name"
+                    :class="$nuxt.$route.path == `/posts/categories/${category.slug}` ? 'bg-gray-300' : ''"
+                >
                     {{ category.name }}
                 </DropDownItem>
             </div>
