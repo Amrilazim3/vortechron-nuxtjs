@@ -138,9 +138,7 @@ export default {
         async edit() {
             let formData = new FormData(this.$refs.form);
             formData.append('body', this.form.body);
-            if (this.form.thumbnail && this.selectedImage) {
-                formData.append('thumbnail', this.form.thumbnail);
-            }
+            formData.append('thumbnail', this.form.thumbnail);
             await this.$axios.$post(`/api/user/posts/${this.$route.params.slug}/edit`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
