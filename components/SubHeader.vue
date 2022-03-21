@@ -14,7 +14,7 @@
                     </NuxtLink>
                 </ul>
             </div>
-            <div class="pt-2 sm:col-span-1 sm:mt-0 lg:col-span-2 xl:col-span-1 xl:ml-12 2xl:-ml-0">
+            <div id="search-modal" class="pt-2 sm:col-span-1 sm:mt-0 lg:col-span-2 xl:col-span-1 xl:ml-12 2xl:-ml-0">
                 <InputWithIcon>
                     <img slot="icon" src="~/assets/search-icon.svg" alt="search-icon" class="absolute mt-1 ml-3 pointer-events-none opacity-30">
                     <input type="text" placeholder="Search users or posts" 
@@ -24,46 +24,77 @@
                         @focus="search($event.target.value)"
                     >
                 </InputWithIcon>
-                <div class="absolute z-10 w-56 p-2 mt-2 bg-white rounded-md" v-if="showUserResult">
+                <div class="absolute z-10 w-56 p-2 mt-2 bg-white rounded-md" v-if="showUsersResult || showPostsResult">
                     <div class="flex">
-                        <p class="flex-1 text-center border-b-2 border-blue-400">users</p>
-                        <p class="flex-1 text-center">posts</p>
+                        <button 
+                            @click="showUsersResult = !showUsersResult; showPostsResult = !showPostsResult; recentOpen = 'users'" 
+                            class="flex-1 text-center" 
+                            :class="showUsersResult ? 'border-b-2 border-blue-400' : ''"
+                        >
+                            users
+                        </button>
+                        <button 
+                            @click="showPostsResult = !showPostsResult; showUsersResult = !showUsersResult; recentOpen = 'posts'" 
+                            class="flex-1 text-center"
+                            :class="showPostsResult ? 'border-b-2 border-blue-400' : ''"
+                        >
+                            posts
+                        </button>
                     </div>
-                    <div v-for="user in users" :key="user.id">
-                        <template v-if="user.id !== currentUserId">
-                            <div class="flex py-1.5 hover:bg-gray-200">
-                                <template v-if="!user.image_url">
-                                    <button class="bg-gray-300 p-2.5 rounded-full cursor-pointer" @click.prevent="$router.push(`/users/${user.id}`)">
-                                        <img class="w-4 h-4" src="~/assets/default-profile-icon.svg" alt="">
-                                    </button>
-                                </template>
-                                <template v-else>
-                                    <button @click.prevent="$router.push(`/users/${user.id}`)">
-                                        <img class="w-8 h-8 rounded-full" :src="user.image_full_url" id="image-url">
-                                    </button>
-                                </template>
-                                <NuxtLink :to="`/users/${user.id}`" class="self-center ml-2.5 w-9/12 truncate">{{ user.username }}</NuxtLink>
-                            </div>
-                            <div class="h-0.5 w-full bg-gray-200"></div>
-                        </template>
-                        <template v-else>
-                            <div class="flex py-1.5 hover:bg-gray-200">
-                                <template v-if="!user.image_url">
-                                    <button class="bg-gray-300 p-2.5 rounded-full cursor-pointer" @click.prevent="$router.push('/user/account/profile')">
-                                        <img class="w-4 h-4" src="~/assets/default-profile-icon.svg" alt="">
-                                    </button>
-                                </template>
-                                <template v-else>
-                                    <button @click.prevent="$router.push('/user/account/profile')">
-                                        <img class="w-8 h-8 rounded-full" :src="user.image_full_url" id="image-url">
-                                    </button>
-                                </template>
-                                <NuxtLink to="/user/account/profile" class="self-center ml-2.5 w-9/12 truncate">{{ user.username }}</NuxtLink>
-                            </div>
-                            <div class="h-0.5 w-full bg-gray-200"></div>
-                        </template>
+                    <div v-if="showUsersResult">
+                        <div v-for="user in users" :key="user.id">
+                            <template v-if="user.id !== currentUserId">
+                                <div class="flex py-1.5 hover:bg-gray-200">
+                                    <template v-if="!user.image_url">
+                                        <button class="bg-gray-300 p-2.5 rounded-full cursor-pointer" @click.prevent="$router.push(`/users/${user.id}`)">
+                                            <img class="w-4 h-4" src="~/assets/default-profile-icon.svg" alt="">
+                                        </button>
+                                    </template>
+                                    <template v-else>
+                                        <button @click.prevent="$router.push(`/users/${user.id}`)">
+                                            <img class="w-8 h-8 rounded-full" :src="user.image_full_url" id="image-url">
+                                        </button>
+                                    </template>
+                                    <NuxtLink :to="`/users/${user.id}`" class="self-center ml-2.5 w-9/12 truncate">{{ user.username }}</NuxtLink>
+                                </div>
+                                <div class="h-0.5 w-full bg-gray-200"></div>
+                            </template>
+                            <template v-else>
+                                <div class="flex py-1.5 hover:bg-gray-200">
+                                    <template v-if="!user.image_url">
+                                        <button class="bg-gray-300 p-2.5 rounded-full cursor-pointer" @click.prevent="$router.push('/user/account/profile')">
+                                            <img class="w-4 h-4" src="~/assets/default-profile-icon.svg" alt="">
+                                        </button>
+                                    </template>
+                                    <template v-else>
+                                        <button @click.prevent="$router.push('/user/account/profile')">
+                                            <img class="w-8 h-8 rounded-full" :src="user.image_full_url" id="image-url">
+                                        </button>
+                                    </template>
+                                    <NuxtLink to="/user/account/profile" class="self-center ml-2.5 w-9/12 truncate">{{ user.username }}</NuxtLink>
+                                </div>
+                                <div class="h-0.5 w-full bg-gray-200"></div>
+                            </template>
+                        </div>
+                        <p v-if="noUsersResult" class="font-thin text-black">no users found.</p>
                     </div>
-                    <p v-if="noUserResult" class="font-thin text-black">no users found.</p>
+                    <div v-else-if="showPostsResult">
+                        <div v-for="post in posts" :key="post.user_id">
+                            <template v-if="post.user_id !== currentUserId">
+                                <div class="flex py-1.5 hover:bg-gray-200">
+                                    <NuxtLink :to="`/users/${post.user_id}/posts/${post.slug}`">{{ post.title }}</NuxtLink>
+                                </div>
+                                <div class="h-0.5 w-full bg-gray-200"></div>
+                            </template>
+                            <template v-else>
+                                <div class="flex py-1.5 hover:bg-gray-200">
+                                    <NuxtLink :to="`/user/posts/${post.slug}`">{{ post.title }}</NuxtLink>
+                                </div>
+                                <div class="h-0.5 w-full bg-gray-200"></div>
+                            </template>
+                        </div>
+                        <p v-if="noPostsResult" class="font-thin text-black">no posts found.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -74,10 +105,17 @@
 export default {
     data() {
         return {
-            users: [],
             currentUserId: null,
-            showUserResult: false,
-            noUserResult: false,
+            
+            users: [],
+            showUsersResult: false,
+            noUsersResult: false,
+            
+            posts: [],
+            showPostsResult: false,
+            noPostsResult: false,
+
+            recentOpen: 'users'
         }
     },
 
@@ -89,26 +127,42 @@ export default {
 
     methods: {
         async search(searchValue) {
-            setTimeout(() => document.addEventListener('click', () => {this.showUserResult = false}), 0);
+            var ignoreClickOnMeElement = document.getElementById('search-modal');
+            setTimeout(() => document.addEventListener('click', (event) => {
+                var isClickInsideElement = ignoreClickOnMeElement.contains(event.target);
+                if (!isClickInsideElement) {
+                    this.showUsersResult = false; this.showPostsResult = false;
+                }
+            }), 0);
 
             if (searchValue == '') {
-                    this.showUserResult = false;
+                    this.showUsersResult = false;
+                    this.showPostsResult = false;
                     return false;
             }
 
             clearTimeout(this.debounce);
             this.debounce = setTimeout(async () => {
-                await this.$axios.$get(`api/users?search=${searchValue}`)
-                    .then((res) => { 
-                        this.noUserResult = false,
-                        this.showUserResult = true;
+                await this.$axios.$get(`api/users-or-posts?search=${searchValue}`)
+                    .then((res) => {
+                        if (this.recentOpen == 'users') {
+                            this.showUsersResult = true;
+                        } else {
+                            this.showPostsResult = true;
+                        }
+
                         if (res.users.data.length == 0) {
-                            this.noUserResult = true;
+                            this.noUsersResult = true;
                         }
                         this.users = res.users.data;
+
+                        if (res.posts.data.length == 0) {
+                            this.noPostsResult = true;
+                        }
+                        this.posts = res.posts.data;
                     })
-            }, 300);
-        }
+            }, 200);
+        },
     }
 }
 </script>
