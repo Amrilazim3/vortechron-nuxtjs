@@ -39,6 +39,27 @@
             </div>
             <NuxtLink :to="`/posts/categories/${categorySlug}`" class="text-blue-500 underline">{{ category }}</NuxtLink>
         </main>
+
+        <div class="w-full p-4 mt-16 bg-white rounded-md">
+            <div class="flex">
+                <img src="~/assets/default-profile-icon.svg" alt="" class="w-4 h-4">
+                <p>username</p>
+            </div>
+            <textarea 
+                name="comment" 
+                id="comment" 
+                cols="20" 
+                rows="6" 
+                placeholder="Give a comment about this post!" 
+                class="w-full mt-5 border-b-2 border-gray-200 focus:outline-none"
+            />
+            <div class="flex justify-between">
+                <div></div>
+                <BlueButton class="mt-3">
+                    SUBMIT
+                </BlueButton>
+            </div>
+        </div>
     </section>
 </template>
 
@@ -53,15 +74,18 @@ export default {
     
     middleware: 'auth',
 
-    head: {
-        title: 'Show Post',
-        meta: [
-            { hid: 'description', name: 'description', content: 'show post' }
-        ],
+    head() {
+        return {
+            title: '| ' + this.title,
+            meta: [
+                { hid: 'description', name: 'description', content: 'show single post of authenticated user' }
+            ],
+        }
     },
 
     mounted() {
         this.getPost();
+
     },
 
     data() {
