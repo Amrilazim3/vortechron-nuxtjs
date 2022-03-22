@@ -1,13 +1,13 @@
 <template>
     <section class="grid p-6 mt-10 sm:max-w-xl sm:mx-auto md:max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl">
         <h2 class="text-2xl font-normal">{{ username }}'s following</h2>
-        <div class="h-1 mb-4 bg-gray-200 w-full"></div>
-        <div v-if="noFollowingMessage" class="flex h-56 justify-center">
-            <h2 class="text-2xl self-end">No following yet</h2>
+        <div class="w-full h-1 mb-4 bg-gray-200"></div>
+        <div v-if="noFollowingMessage" class="flex justify-center h-56">
+            <h2 class="self-end text-2xl">No following yet</h2>
         </div>
         <div v-else>
             <div v-for="follow in following" :key="follow.id" class="bg-white mb-1.5 rounded-md">
-                <div class="flex px-2 py-2 justify-between">
+                <div class="flex justify-between px-2 py-2">
                     <template v-if="!follow.image_url">
                         <template v-if="$auth.user.id == follow.id">
                             <button class="mr-2 bg-gray-300 max-w-max p-2.5 rounded-full" @click.prevent="$router.push('/user/account/profile')">
@@ -23,16 +23,16 @@
                     <template v-else>
                         <template v-if="$auth.user.id == follow.id">
                             <button class="mr-2" @click.prevent="$router.push('/user/account/profile')">
-                                <img class="h-10 w-10 rounded-full" :src="follow.image_full_url" id="image-url">
+                                <img class="w-10 h-10 rounded-full" :src="follow.image_full_url" id="image-url">
                             </button>
                         </template>
                         <template v-else>
                             <button class="mr-2" @click.prevent="$router.push(`/users/${follow.id}`)">
-                                <img class="h-10 w-10 rounded-full" :src="follow.image_full_url" id="image-url">
+                                <img class="w-10 h-10 rounded-full" :src="follow.image_full_url" id="image-url">
                             </button>
                         </template>
                     </template>
-                    <div class="self-center flex-1 flex">
+                    <div class="flex self-center flex-1">
                         <template v-if="$auth.user.id == follow.id">
                             <NuxtLink to="/user/account/profile" class="cursor-pointer">{{ follow.username }}</NuxtLink>
                         </template>
@@ -50,7 +50,7 @@
                             </button>
                         </template>
                         <template v-else>
-                            <button class="text-blue-400 font-semibold hover:text-blue-600" @click.prevent="followBack(follow.id)">
+                            <button class="font-semibold text-blue-400 hover:text-blue-600" @click.prevent="followBack(follow.id)">
                                 Follow
                             </button>
                         </template>
@@ -68,11 +68,13 @@ export default {
 
     middleware: 'auth',
 
-    head: {
-        title: '| Following',
-        meta: [
-            { hid: 'description', name: 'description', content: 'Following' }
-        ],
+    head() {
+        return {
+            title: '| ' + this.username + '`s following',
+            meta: [
+                { hid: 'description', name: 'description', content: 'Following' }
+            ],
+        }
     },
 
     mounted() {
