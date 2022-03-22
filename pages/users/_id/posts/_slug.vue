@@ -49,11 +49,13 @@ export default {
     
     layout: 'hide-subnav',
 
-    head: {
-        title: 'Show Post',
-        meta: [
-            { hid: 'description', name: 'description', content: 'show post' }
-        ],
+    head() {
+        return {
+            title: '| ' + this.title,
+            meta: [
+                { hid: 'description', name: 'description', content: 'show single post of other user' }
+            ],
+        }
     },
 
     mounted() {
