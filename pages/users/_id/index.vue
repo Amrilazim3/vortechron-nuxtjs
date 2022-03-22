@@ -112,11 +112,13 @@ export default {
     
     layout: 'hide-subnav',
 
-    head: {
-        title: '| User',
-        meta: [
-            { hid: 'description', name: 'description', content: 'User' }
-        ],
+    head() {
+        return {
+            title: '| ' + this.user.username,
+            meta: [
+                { hid: 'description', name: 'description', content: 'show other user profile page' }
+            ],
+        }
     },
 
     mounted() {
