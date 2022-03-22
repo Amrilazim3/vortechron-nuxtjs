@@ -102,11 +102,13 @@ export default {
     
     middleware: 'auth',
 
-    head: {
-        title: '| Profile',
-        meta: [
-            { hid: 'description', name: 'description', content: 'Profile' }
-        ],
+    head() {
+        return {
+            title: '| ' + this.$auth.user.username,
+            meta: [
+                { hid: 'description', name: 'description', content: 'display user profile page' }
+            ],
+        }
     },
 
     mounted() {
