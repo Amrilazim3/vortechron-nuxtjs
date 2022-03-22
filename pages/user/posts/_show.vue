@@ -50,7 +50,7 @@
                 id="comment" 
                 cols="20" 
                 rows="6" 
-                placeholder="Give a comment about this post!" 
+                placeholder="Give this post a comment!" 
                 class="w-full mt-5 border-b-2 border-gray-200 focus:outline-none"
             />
             <div class="flex justify-between">
