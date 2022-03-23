@@ -153,11 +153,15 @@ export default {
 
                         if (res.users.data.length == 0) {
                             this.noUsersResult = true;
+                        } else {
+                            this.noUsersResult = false;
                         }
                         this.users = res.users.data;
 
                         if (res.posts.data.length == 0) {
                             this.noPostsResult = true;
+                        } else {
+                            this.noPostsResult = false;
                         }
                         this.posts = res.posts.data;
                     })
