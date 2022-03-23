@@ -1,22 +1,22 @@
 <template>
     <section class="min-h-screen p-10 sm:max-w-xl sm:mx-auto md:max-w-2xl lg:flex lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl">
         <div class="block md:mt-10 lg:self-center lg:flex-1 xl:ml-8 2xl:ml-16">
-            <h1 class="text-4xl text-black font-bold md:text-center lg:text-left">
+            <h1 class="text-4xl font-bold text-black md:text-center lg:text-left">
                 CREATE YOUR OWN BLOG POST
             </h1>
-            <p class="text-base text-blue-700 font-medium md:text-center lg:text-left">Create your account now!</p>
+            <p class="text-base font-medium text-blue-700 md:text-center lg:text-left">Create your account now!</p>
         </div>
-        <div style="background-color: rgba(243, 243, 243, 1);" class="rounded-lg shadow-xl mt-6 lg:flex-1 lg:self-center xl:mr-8 2xl:ml-40 2xl:mr-14">
+        <div style="background-color: rgba(243, 243, 243, 1);" class="mt-6 rounded-lg shadow-xl lg:flex-1 lg:self-center xl:mr-8 2xl:ml-40 2xl:mr-14">
             <ValidationObserver tag="div" ref="form" v-slot="{ handleSubmit }">
                 <div class="px-8 pt-8">
-                    <h3 class="text-2xl font-bold mb-4">Sign up to create account</h3>
-                    <p class="text-base font-normal mt-4">Sign up in with :</p>
+                    <h3 class="mb-4 text-2xl font-bold">Sign up to create account</h3>
+                    <p class="mt-4 text-base font-normal">Sign up in with :</p>
                     <OAuthServices class="flex mt-2 space-x-4"/>
                 </div>
                 <form @submit.prevent="handleSubmit(signUp)" class="px-8 pb-8">
                     <div class="flex my-6">
                         <div class="bg-gray-300 h-0.5 flex-1 self-center"></div>
-                        <p class="text-center mx-4 text-sm">Or manually sign up</p>
+                        <p class="mx-4 text-sm text-center">Or manually sign up</p>
                         <div class="bg-gray-300 h-0.5 flex-1 self-center"></div>
                     </div>
                     <ValidationProvider tag="div" vid="name" name="Name" rules="required|min:4|max:50" v-slot="{ errors }">
@@ -45,7 +45,7 @@
                         <p class="text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
                     <p class="mt-2">Already sign up? <NuxtLink to="/auth/sign-in" class="text-blue-400 hover:underline">Sign in</NuxtLink> here</p>
-                    <BlueButton type="submit" id="submit" class="mt-6 w-full transition duration-300">
+                    <BlueButton type="submit" id="submit" class="w-full mt-6 transition duration-300">
                         Sign Up
                     </BlueButton>
                 </form>
