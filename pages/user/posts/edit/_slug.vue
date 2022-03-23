@@ -50,7 +50,8 @@
                             v-model="form.body"
                             ref="myQuillEditor"
                             :options="editorOption" 
-                        />                        
+                            data-v-5c8f739c
+                        />                     
                         <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
                 </div>
@@ -181,7 +182,11 @@ export default {
 </script>
 
 <style>
-.ql-editor {
+.quill-editor[data-v-5c8f739c] .ql-editor {
     height: 42vh;
+}
+
+.quill-editor[data-v-5c8f739c] .ql-toolbar {
+    display: block;
 }
 </style>
