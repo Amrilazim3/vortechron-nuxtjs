@@ -71,7 +71,8 @@
                                         class="border border-gray-300 rounded-md"
                                         v-model="form.bio"
                                         ref="myQuillEditor"
-                                        :options="editorOption" 
+                                        :options="editorOption"
+                                        data-v-58aa27c9
                                     />
                                     <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                                 </ValidationProvider>
@@ -260,11 +261,11 @@ export default {
   display: block;
 }
 
-.ql-editor {
+.quill-editor[data-v-58aa27c9] .ql-editor {
     height: 20vh;
 }
 
-.ql-toolbar {
+.quill-editor[data-v-58aa27c9] .ql-toolbar {
     display: none;
 }
 </style>
