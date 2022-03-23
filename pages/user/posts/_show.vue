@@ -40,26 +40,7 @@
             <NuxtLink :to="`/posts/categories/${categorySlug}`" class="text-blue-500 underline">{{ category }}</NuxtLink>
         </main>
 
-        <div class="w-full p-4 mt-16 bg-white rounded-md">
-            <div class="flex">
-                <img src="~/assets/default-profile-icon.svg" alt="" class="w-4 h-4">
-                <p>username</p>
-            </div>
-            <textarea 
-                name="comment" 
-                id="comment" 
-                cols="20" 
-                rows="6" 
-                placeholder="Give this post a comment!" 
-                class="w-full mt-5 border-b-2 border-gray-200 focus:outline-none"
-            />
-            <div class="flex justify-between">
-                <div></div>
-                <BlueButton class="mt-3">
-                    SUBMIT
-                </BlueButton>
-            </div>
-        </div>
+        <CommentForm :postId="postId" />
     </section>
 </template>
 
@@ -85,11 +66,11 @@ export default {
 
     mounted() {
         this.getPost();
-
     },
 
     data() {
         return {
+            postId: 0,
             title: '',
             date: '',
             body: '',
@@ -105,6 +86,7 @@ export default {
         async getPost() {
             await this.$axios.$get(`/api/user/posts/${this.$route.params.show}`)
                 .then(({ post }) => {
+                    this.postId = post.post_id;
                     this.title = post.title;
                     this.body = post.body;
                     this.date = post.created_at;

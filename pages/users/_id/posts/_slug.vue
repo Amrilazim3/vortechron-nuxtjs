@@ -36,6 +36,8 @@
             </div>
             <NuxtLink :to="`/posts/categories/${categorySlug}`" class="text-blue-500 underline">{{ category }}</NuxtLink>
         </main>
+
+        <CommentForm :postId="postId" />
     </section>
 </template>
 
@@ -64,6 +66,7 @@ export default {
 
     data() {
         return {
+            postId: 0,
             title: '',
             date: '',
             body: '',
@@ -79,6 +82,7 @@ export default {
         async getPost() {
             await this.$axios.$get(`/api/users/posts/${this.$route.params.slug}`)
                 .then(({ post }) => {
+                    this.postId = post.post_id;
                     this.title = post.title;
                     this.body = post.body;
                     this.date = post.created_at;
