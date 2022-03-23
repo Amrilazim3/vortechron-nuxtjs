@@ -39,11 +39,12 @@
                 </div>
                 <div class="w-full mt-6">
                     <h2 class="mb-2">Body</h2>
-                    <ValidationProvider tag="div" vid="body" name="Body" rules="required|min:100" v-slot="{ errors }">
+                    <ValidationProvider id="editor" tag="div" vid="body" name="Body" rules="required|min:100" v-slot="{ errors }">
                         <quill-editor 
                             v-model="form.body"
                             ref="myQuillEditor"
-                            :options="editorOption" 
+                            :options="editorOption"
+                            data-v-166db153
                         />                        
                         <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
@@ -96,7 +97,6 @@ export default {
 
     data() {
         return {
-            loading: false,
             form: {
                 title: '',
                 thumbnail: '',
@@ -164,7 +164,11 @@ export default {
 </script>
 
 <style>
-.ql-editor {
+.quill-editor[data-v-166db153] .ql-editor {
     height: 42vh;
+}
+
+.quill-editor[data-v-166db153] .ql-toolbar {
+    display: block;
 }
 </style>
