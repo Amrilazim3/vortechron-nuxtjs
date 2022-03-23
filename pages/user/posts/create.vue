@@ -32,14 +32,14 @@
                 </div>
                 <div class="w-full mt-6">
                     <h2 class="mb-2">Excerpt</h2>
-                    <ValidationProvider tag="div" vid="excerpt" name="Excerpt" rules="required|max:100" v-slot="{ errors }">
+                    <ValidationProvider tag="div" vid="excerpt" name="Excerpt" rules="required|max:150" v-slot="{ errors }">
                         <input type="text" id="excerpt" name="excerpt" class="bg-white h-8 w-full pl-2.5 border border-gray-400 focus:border-gray-600 focus:outline-none rounded-md" v-model="form.excerpt"/>
                         <p name="error-message" class="text-red-500">{{ errors[0] }}</p>
                     </ValidationProvider>
                 </div>
                 <div class="w-full mt-6">
                     <h2 class="mb-2">Body</h2>
-                    <ValidationProvider id="editor" tag="div" vid="body" name="Body" rules="required|min:100" v-slot="{ errors }">
+                    <ValidationProvider id="editor" tag="div" vid="body" name="Body" rules="required|min:300" v-slot="{ errors }">
                         <quill-editor 
                             v-model="form.body"
                             ref="myQuillEditor"
