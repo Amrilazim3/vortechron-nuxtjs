@@ -99,11 +99,13 @@ export default {
         VueMomentsAgo
     },
     
-    head: {
-        title: 'Categories',
-        meta: [
-            { hid: 'description', name: 'description', content: 'show categories' }
-        ],
+    head() {
+        return {
+            title: '| ' + this.$route.params.slug,
+            meta: [
+                { hid: 'description', name: 'description', content: 'show all posts by single category' }
+            ],
+        }
     },
 
     mounted() {
