@@ -100,9 +100,9 @@ export default {
     },
     
     head: {
-        title: 'Categories',
+        title: '| Latest',
         meta: [
-            { hid: 'description', name: 'description', content: 'show categories' }
+            { hid: 'description', name: 'description', content: 'show latest posts' }
         ],
     },
 
