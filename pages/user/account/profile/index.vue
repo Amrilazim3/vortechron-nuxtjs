@@ -45,7 +45,7 @@
         <main>
             <div class="h-0.5 bg-white mt-8"></div>
 
-            <div v-if="noPost && $auth.user.email_verified_at || $auth.user.service">
+            <div v-if="noPost && ( $auth.user.email_verified_at || $auth.user.service )">
                 <h1 class="text-lg text-center mt-52">No post yet, <NuxtLink to="/user/posts/create" class="text-blue-500 hover:underline">create your post</NuxtLink> now</h1>
             </div>
             <div v-else-if="noPost && !$auth.user.email_verified_at && !$auth.user.service">
