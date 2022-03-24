@@ -5,7 +5,8 @@
                 <h1 class="text-lg font-medium text-center">PLEASE VERIFIED YOUR EMAIL</h1>
                 <p class="text-sm text-center">You cannot create a post until you verify your email</p>
                 <p class="text-sm text-center">If you didn't receive email verification link, you can <button class="underline hover:text-blue-400" @click.prevent="resendEmailVerification">resend here</button></p>
-                <p class="text-sm text-center text-yellow-600" v-if="triggerResendButton">It may take a seconds, Please wait...</p>
+                <p class="text-sm text-center text-yellow-500" v-if="triggerResendButton">It may take a seconds, Please wait...</p>
+                <p class="text-sm text-center text-red-500" v-if="verificationResendFailed">Something went wrong, please try again later.</p>
                 <p class="text-sm text-center text-blue-500" v-if="verificationResend">Email verification link has been send! please check your email. Please try again if you do not receive it.</p>
             </div>
             <div v-if="successVerified">
@@ -39,7 +40,8 @@ export default {
         successVerified: false,
         alreadyVerified: false,
         verificationResend: false,
-        triggerResendButton: false
+        triggerResendButton: false,
+        verificationResendFailed: false
     }),
 
     methods: {
@@ -52,8 +54,8 @@ export default {
                         this.triggerResendButton = false;
                     }
                 })
-                .catch((err) => {
-                    console.log(err);
+                .catch(() => {
+                    this.verificationResendFailed = true;
                 })
         },
 
