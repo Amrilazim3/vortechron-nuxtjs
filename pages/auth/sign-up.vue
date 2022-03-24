@@ -91,6 +91,9 @@ export default {
                 await this.$axios.$post('/api/sign-up', this.form)
                     .then(() => {
                         this.$auth.loginWith('laravelSanctum', { data: this.form })
+                            .then(() => {
+                                this.$router.back();
+                            })
                     })
                     .catch((err) => {
                         this.$undisableButton(submitButton);
