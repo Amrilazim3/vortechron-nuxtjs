@@ -66,7 +66,7 @@ export default {
 
     data() {
         return {
-            postId: 0,
+            postId: null,
             title: '',
             date: '',
             body: '',
