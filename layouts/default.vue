@@ -1,6 +1,7 @@
 <template>
     <div style="background-color: rgba(202, 202, 202, 1);" class="min-h-screen">
         <Nav />
+        <EmailVerificationNotice />
         <FlashMessageLists :notifications="notifications" />
         <Nuxt />
     </div>
