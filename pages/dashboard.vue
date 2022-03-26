@@ -1,5 +1,5 @@
 <template>
-    <section class="grid p-6 pt-56 sm:pt-44 sm:max-w-xl sm:mx-auto md:max-w-2xl lg:max-w-4xl xl:pt-36 xl:max-w-5xl 2xl:max-w-7xl" :class="this.$auth.loggedIn && !this.$auth.user.email_verified_at && !this.$auth.user.service ? 'pt-72 sm:pt-64 xl:pt-56' : '' ">
+    <section class="grid p-6 pt-56 sm:pt-44 sm:max-w-xl sm:mx-auto md:max-w-2xl lg:max-w-4xl xl:pt-36 xl:max-w-5xl 2xl:max-w-7xl">
         <h1 class="my-8 text-4xl font-normal text-center">Explore Blogs</h1>
 
             <section v-if="!noPost" class="w-10/12 mx-auto mt-4 sm:grid sm:grid-cols-6 sm:w-full">
