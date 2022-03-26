@@ -3,8 +3,10 @@
         <template v-if="$auth.loggedIn">
             <div class="w-full p-4 mt-16 bg-white rounded-md">
                 <div class="flex">
-                    <template v-if="!this.$auth.loggedIn">
-                        <img src="~/assets/default-profile-icon.svg" alt="" class="w-5">
+                    <template v-if="!this.$auth.user.image_url">
+                        <div class="bg-gray-300 p-2.5 rounded-full">
+                            <img src="~/assets/default-profile-icon.svg" alt="" class="w-5">
+                        </div>
                     </template>
                     <template v-else>
                         <img class="w-10 h-10 rounded-full" :src="this.$auth.user.image_full_url" id="image-url">
@@ -170,12 +172,16 @@ export default {
         },
 
         deleteComment(postId) {
-            this.$axios.$delete(`/api/comment/delete/${postId}`)
-                .then(() => {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                    this.comments = [];
-                    this.getComments(this.page);
-                })
+            let answer = confirm('Delete this comment?');
+
+            if (answer) {
+                this.$axios.$delete(`/api/comment/delete/${postId}`)
+                    .then(() => {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        this.comments = [];
+                        this.getComments(this.page);
+                    })
+            } 
         },
 
         handleScrolledToBottom(isVisible) {
