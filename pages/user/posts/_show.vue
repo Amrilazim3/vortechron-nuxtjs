@@ -20,16 +20,11 @@
                     </template>
                     <NuxtLink to="/user/account/profile" class="font-normal self-center ml-2.5 hover:underline">{{ username }}</NuxtLink>
                 </div>
-                <div class="self-center">
+                <div class="flex self-center">
                     <button>
                         <ShowPostDropDown :slug="$route.params.show" />
                     </button>
-                    <button class="ml-4">
-                        <img src="~/assets/heart-logo.svg" alt="" class="h-6 opacity-20">
-                    </button> 
-                    <button class="ml-4">
-                        <img src="~/assets/bookmark-logo.svg" alt="" class="h-6 opacity-20">
-                    </button>
+                    <LikeAndBookmarkLogo :slug="$route.params.show" />
                 </div>
             </div>
             <VueMomentsAgo prefix="posted" suffix="ago" :date="date" lang="en" class="text-sm font-normal" />
