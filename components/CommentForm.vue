@@ -137,7 +137,7 @@ export default {
     methods: {
         async getComments(page) {
             if (this.$route.params.slug) {
-                await this.$axios.$get(`/api/comments/${this.$route.params.slug}?page=${page}`)
+                await this.$axios.$get(`/api/${this.$route.params.slug}/comments?page=${page}`)
                     .then(({ comments }) => {
                         if (comments.data.length == 0) {
                             this.noComments = true;
@@ -147,7 +147,7 @@ export default {
                         this.comments.push(...comments.data);
                     })
             } else if (this.$route.params.show) {
-                await this.$axios.$get(`/api/comments/${this.$route.params.show}?page=${page}`)
+                await this.$axios.$get(`/api/${this.$route.params.show}/comments?page=${page}`)
                     .then(({ comments }) => {
                         if (comments.data.length == 0) {
                             this.noComments = true;
