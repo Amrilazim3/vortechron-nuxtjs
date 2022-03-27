@@ -100,7 +100,7 @@ export default {
     },
     
     head: {
-        title: '| Latest Post',
+        title: '| Latest Posts',
         meta: [
             { hid: 'description', name: 'description', content: 'show latest posts' }
         ],
