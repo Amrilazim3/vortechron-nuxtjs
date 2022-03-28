@@ -1,13 +1,13 @@
 <template>
     <section class="grid p-6 mt-10 sm:max-w-xl sm:mx-auto md:max-w-2xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-7xl">
         <h2 class="text-2xl font-normal">Friends</h2>
-        <div class="h-1 mb-4 bg-gray-200 w-full"></div>
-        <div v-if="noFriendMessage" class="flex h-56 justify-center">
-            <h2 class="text-2xl self-end">No friends yet</h2>
+        <div class="w-full h-1 mb-4 bg-gray-200"></div>
+        <div v-if="noFriendMessage" class="flex justify-center h-56">
+            <h2 class="self-end text-2xl">No friends yet</h2>
         </div>
         <div v-else v-for="friend in friends" :key="friend.id">
             <div class="bg-white mb-1.5 rounded-md">
-                <div class="flex px-2 py-2 justify-between">
+                <div class="flex justify-between px-2 py-2">
                     <template v-if="!friend.image_url">
                         <button class="mr-2 bg-gray-300 max-w-max p-2.5 rounded-full" @click.prevent="$router.push(`/users/${friend.id}`)">
                             <img src="~/assets/default-profile-icon.svg" alt="" class="h-5">
@@ -15,20 +15,20 @@
                     </template>
                     <template v-else>
                         <button class="mr-2" @click.prevent="$router.push(`/users/${friend.id}`)">
-                            <img class="h-10 w-10 rounded-full" :src="friend.image_full_url" id="image-url">
+                            <img class="w-10 h-10 rounded-full" :src="friend.image_full_url" id="image-url">
                         </button>
                     </template>
-                    <div class="self-center flex-1 flex">
+                    <div class="flex self-center flex-1">
                         <NuxtLink :to="`/users/${friend.id}`" class="cursor-pointer">{{ friend.username }}</NuxtLink>
                     </div>
                     <div class="self-center space-x-2">
                         <template v-if="friend.isFriend">
-                            <button class="text-red-400 font-semibold hover:text-red-600" @click.prevent="unFollow(friend.id)">
+                            <button class="font-semibold text-red-400 hover:text-red-600" @click.prevent="unFollow(friend.id)">
                                 Unfollow
                             </button>
                         </template>
                         <template v-else>
-                            <button class="text-blue-400 font-semibold hover:text-blue-600" @click.prevent="follow(friend.id)">
+                            <button class="font-semibold text-blue-400 hover:text-blue-600" @click.prevent="follow(friend.id)">
                                 Follow
                             </button>
                         </template>
