@@ -82,7 +82,7 @@
         <slot name="scroll-handler"></slot>
     </section>
     <section v-else class="mx-auto mt-4 sm:w-full">
-        <p class="mt-24 text-lg font-normal text-center">No posts yet...</p>
+        <slot name="no-post-message"></slot>
     </section>
 </template>
 
