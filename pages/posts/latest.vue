@@ -3,7 +3,8 @@
         <h1 class="my-8 text-4xl font-normal text-center">Latest Posts</h1>
 
         <DisplayPosts :noPost="noPost" :posts="posts" :currentUserId="currentUserId">
-            <div slot="scroll-handler" v-if="posts.length" v-observe-visibility="handleScrolledToBottom"></div>    
+            <div slot="scroll-handler" v-if="posts.length" v-observe-visibility="handleScrolledToBottom"></div>
+            <p slot="no-post-message" class="mt-24 text-lg font-normal text-center">No latest posts yet...</p>    
         </DisplayPosts>
             
     </section>
