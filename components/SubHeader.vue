@@ -9,7 +9,7 @@
                         <li class="text-lg font-bold hover:underline">Latest</li>
                     </NuxtLink>
 
-                    <NuxtLink to="/">
+                    <NuxtLink to="/posts/popular" :class="$nuxt.$route.path == '/posts/popular' ? 'underline' : ''">
                         <li class="text-lg font-bold hover:underline md:ml-4">Popular</li>
                     </NuxtLink>
                 </ul>
