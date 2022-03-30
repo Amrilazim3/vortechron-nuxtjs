@@ -1,6 +1,6 @@
 <template>
     <section class="grid p-6 mt-10 sm:max-w-xl sm:mx-auto">
-        <div class="bg-white p-4 rounded-md shadow-2xl sm:p-6 sm:w-full">
+        <div class="p-4 bg-white rounded-md shadow-2xl sm:p-6 sm:w-full">
             <div>
                 <h3 class="text-2xl font-semibold text-center">Forgot Password</h3>
             </div>
@@ -20,11 +20,11 @@
                         </ValidationProvider>
                     </keep-alive>
                     <div>
-                        <BlueButton type="submit" id="submit" class="mt-4 w-full">Send Password Reset Link</BlueButton>
+                        <BlueButton type="submit" id="submit" class="w-full mt-4">Send Password Reset Link</BlueButton>
                     </div>
                 </form>
             </ValidationObserver>
-            <p class="mt-2 text-sm text-green-500 font-medium" v-if="isSendLink">We have sent reset password link to your email!. If you not received the link, you can try again.</p>
+            <p class="mt-2 text-sm font-medium text-green-500" v-if="isSendLink">We have sent reset password link to your email!. If you not received the link, you can try again.</p>
         </div>
     </section>
 </template>
