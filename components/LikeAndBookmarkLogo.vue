@@ -43,6 +43,9 @@ export default {
 
     methods: {
         checkLikeAndBookmarkCondition() {
+            if (!this.$auth.loggedIn) {
+                return;
+            }
             this.$axios.$get(`/api/posts/${this.slug}/${this.$auth.user.id}/get-like-and-bookmark-condition`)
                 .then((res) => {
                     if (res.is_liked) {
@@ -56,6 +59,11 @@ export default {
         },
 
         async likeOrUnlikePost() {
+            if (!this.$auth.loggedIn) {
+                this.$router.push('/auth/sign-in');
+                return;
+            }
+
             let data = {
                 userId: this.$auth.user.id
             }
@@ -75,6 +83,11 @@ export default {
         },
 
         async bookmarkOrUnBookmarkPost() {
+            if (!this.$auth.loggedIn) {
+                this.$router.push('/auth/sign-in');
+                return;
+            }
+            
             let data = {
                 userId: this.$auth.user.id
             }
