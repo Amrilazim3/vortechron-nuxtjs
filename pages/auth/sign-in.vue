@@ -81,6 +81,10 @@ export default {
             try {
                 await this.$auth.loginWith('laravelSanctum', { data: this.form })
                     .then(() => {
+                        if (this.resetPasswordMessage) {
+                            this.$router.push('/dashboard');
+                            return
+                        }
                         this.$router.back();
                     })
             } catch (err) {
