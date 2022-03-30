@@ -82,10 +82,34 @@
                             <img :src="post.thumbnail" alt="" class="h-32 mb-4 bg-gray-300" style='width: 100%; object-fit: contain'>
                         </template>
                         <template v-if="post.category[0]">
-                            <NuxtLink :to="`/posts/categories/${post.category_slug[0]}`" class="text-sm text-blue-400 hover:underline">{{ post.category[0] }}</NuxtLink>
+                            <div class="flex justify-between">
+                                <NuxtLink :to="`/posts/categories/${post.category_slug[0]}`" class="text-sm text-blue-400 hover:underline">{{ post.category[0] }}</NuxtLink>
+                                <span class="flex text-sm">
+                                    {{ post.likes_count }}
+                                    <svg 
+                                        class="h-4 ml-1.5 self-center fill-current text-gray-600 cursor-none"
+                                        xmlns="http://www.w3.org/2000/svg" 
+                                        viewBox="0 0 512 512"
+                                    >
+                                        <path d="M0 190.9v-5.8c0-69.9 50.52-129.52 119.4-141 44.7-7.59 92 7.27 124.6 39.92L256 96l11.1-11.98C300.6 51.37 347 36.51 392.6 44.1c68.9 11.48 119.4 71.1 119.4 141v5.8c0 41.5-17.2 81.2-47.6 109.5L283.7 469.1c-7.5 7-17.4 10.9-27.7 10.9s-20.2-3.9-27.7-10.9L47.59 300.4C17.23 272.1 0 232.4 0 190.9z"/>
+                                    </svg>
+                                </span>
+                            </div>
                         </template>
                         <template v-else>
-                            <p class="text-sm opacity-0 cursor-default">hidden</p>
+                            <div class="flex justify-between">
+                                <p class="text-sm opacity-0 cursor-default">hidden</p>
+                                <span class="flex text-sm">
+                                    {{ post.likes_count }}
+                                    <svg 
+                                        class="h-4 ml-1.5 self-center fill-current text-gray-600 cursor-none"
+                                        xmlns="http://www.w3.org/2000/svg" 
+                                        viewBox="0 0 512 512"
+                                    >
+                                        <path d="M0 190.9v-5.8c0-69.9 50.52-129.52 119.4-141 44.7-7.59 92 7.27 124.6 39.92L256 96l11.1-11.98C300.6 51.37 347 36.51 392.6 44.1c68.9 11.48 119.4 71.1 119.4 141v5.8c0 41.5-17.2 81.2-47.6 109.5L283.7 469.1c-7.5 7-17.4 10.9-27.7 10.9s-20.2-3.9-27.7-10.9L47.59 300.4C17.23 272.1 0 232.4 0 190.9z"/>
+                                    </svg>
+                                </span>
+                            </div>
                         </template>
                         <NuxtLink :to="`/users/${$route.params.id}/posts/${post.slug}`" class="flex text-lg font-bold mt-2.5 hover:underline">{{ post.title }}</NuxtLink>
                         <p class="h-20 mt-4 text-sm">{{ post.excerpt }}</p>
