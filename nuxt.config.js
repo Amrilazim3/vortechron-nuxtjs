@@ -1,4 +1,4 @@
-const API_URL = 'https://amblog.amril.com'
+const API_URL = 'https://api.vortechron.com'
 
 export default {
     ssr: false,
