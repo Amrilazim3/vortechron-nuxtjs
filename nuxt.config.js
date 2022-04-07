@@ -1,4 +1,4 @@
-const API_URL = 'https://api.vortechron.com'
+const API_URL = 'https://amblog.amril.com'
 
 export default {
     ssr: false,
@@ -55,29 +55,29 @@ export default {
 
     auth: {
         strategies: {
-        'laravelSanctum': {
-            provider: 'laravel/sanctum',
-            url: API_URL,
-            endpoints: {
-            login: {
-                url: '/api/sign-in'
-            },
-            logout: {
-                url: '/api/sign-out'
-            },
-            user: {
-                url: '/api/user'
+            'laravelSanctum': {
+                provider: 'laravel/sanctum',
+                url: API_URL,
+                endpoints: {
+                    login: {
+                        url: '/api/sign-in'
+                    },
+                    logout: {
+                        url: '/api/sign-out'
+                    },
+                    user: {
+                        url: '/api/user'
+                    }
+                },
+                user: {
+                    property: false
+                }
             }
-            },
-            user: {
-            property: false
-            }
-        }
         },
         redirect: {
-        login: '/auth/sign-in',
-        logout: '/',
-        home: '/dashboard'
+            login: '/auth/sign-in',
+            logout: '/',
+            home: '/dashboard'
         }
     },
 
